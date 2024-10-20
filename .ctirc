@@ -1,0 +1,37 @@
+{
+    addNewline: true,
+    excludes: [
+        "@types",
+        "typings",
+        "__test__",
+        "__tests__",
+        "node_modules",
+        "**/getTheme.ts",
+    ],
+    fileExcludePatterns: [],
+    fileFirst: false,
+    globOptions: {
+        cwd: ".",
+        dot: true,
+        ignore: [
+            "@types/**",
+            "typings/**",
+            "__test__/**",
+            "__tests__/**",
+            "node_modules/**",
+        ],
+        nonull: true,
+    },
+    includeCWD: true,
+    output: "index.ts",
+    quote: '"',
+    targetExts: [
+        "ts",
+        "tsx",
+    ],
+    useSemicolon: false,
+    useTimestamp: false,
+    verbose: false,
+    withoutBackupFile: true,
+    withoutComment: true,
+}

@@ -1,0 +1,123 @@
+/* autoprefixer grid: autoplace */
+
+@import "./preflight.css";
+@import "./variables.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* ::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        background: transparent !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        background: transparent !important;
+    } */
+
+    img,
+    a {
+        @apply user-drag-none user-select-none app-region-no-drag;
+    }
+
+    dialog:modal {
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    /* code {
+        @apply rounded-md border-1 border-pvbx-secondary/40 px-1.5 py-1 text-xs;
+    } */
+
+    kbd {
+        border-radius: 0.25rem;
+        box-decoration-break: clone;
+        line-height: 1.2;
+        background-color: theme(colors.pvbx.kbd-background);
+        user-select: none;
+        position: relative;
+        text-align: center;
+        /* cursor: help; */
+        border-width: 0.0625rem;
+        border-style: solid;
+        border-color: theme(colors.pvbx.accent-gray);
+        padding: 0.0625rem 0.3125rem;
+        top: -0.125rem;
+        box-shadow: 0 0.15625rem 0 0.125rem theme(colors.pvbx.accent-gray);
+
+        &:hover {
+            top: 0rem;
+            box-shadow: 0 0.075rem 0 0.09375rem theme(colors.pvbx.accent-gray);
+        }
+
+        &:active {
+            top: 0.09375rem;
+            box-shadow: 0 0.075rem 0 0.0625rem theme(colors.pvbx.accent-gray);
+        }
+    }
+
+    [data-theme="dark"] [data-hide-on-theme="dark"],
+    [data-theme="light"] [data-hide-on-theme="light"] {
+        @apply hidden;
+    }
+}
+
+#nprogress {
+    position: relative;
+    pointer-events: none;
+    z-index: 2147483644;
+
+    .bar {
+        width: 105%;
+        height: 0.09375rem;
+        top: 0;
+        left: 0;
+        position: fixed;
+        border-radius: 1rem;
+        transform-origin: right;
+        background-color: rgb(var(--pvbx-secondary) / 0.6);
+    }
+}
+
+[data-radix-popper-content-wrapper] {
+    @apply overflow-hidden has-[[data-radix-popper-content-wrapper]]:overflow-visible;
+}
+
+/* 2XL */
+/* @media only screen and (max-width: 1535px) */
+@screen 2xl {}
+
+/* XL */
+/* @media only screen and (max-width: 1279px) */
+@screen xl {}
+
+/* LG */
+/* @media only screen and (max-width: 1023px) */
+@screen lg {}
+
+/* MD */
+/* @media only screen and (max-width: 870px) */
+@screen md {}
+
+/* SM */
+/* @media only screen and (max-width: 639px) */
+@screen sm {}
+
+/* XS */
+/* @media only screen and (max-width: 345px) */
+@screen xs {}
+
+/* Extra XS */
+/* @media only screen and (max-width: 259px) */
+@screen xxs {}

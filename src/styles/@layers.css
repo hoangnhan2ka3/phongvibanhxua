@@ -1,0 +1,137 @@
+/* stylelint-disable declaration-property-value-no-unknown */
+
+@layer components {
+    .no-transition * {
+        transition: color 0s, transform cubic-bezier(0.4, 0, 0.2, 1) 250ms !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .no-transition * {
+            transition: all 0s !important;
+        }
+    }
+}
+
+@layer utilities {
+    .ease {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    }
+
+    .box {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+    }
+
+    .flip-x {
+        transform: rotateY(180deg);
+    }
+
+    .flip-y {
+        transform: rotateX(180deg);
+    }
+
+    .flip {
+        transform: rotateX(180deg) rotateY(180deg);
+    }
+
+    .mask {
+        &-none {
+            mask: none;
+        }
+        &-inherit {
+            mask: inherit;
+        }
+        &-initial {
+            mask: initial;
+        }
+        &-unset {
+            mask: unset;
+        }
+        &-revert {
+            mask: revert;
+        }
+        &-revert-layer {
+            mask: revert-layer;
+        }
+    }
+
+    .text-shadow {
+        text-shadow: 0 0 theme(colors.black);
+        &-none {
+            text-shadow: none;
+        }
+    }
+
+    .app-region {
+        &-drag {
+            -webkit-app-region: drag;
+            -moz-app-region: drag;
+            -ms-app-region: drag;
+        }
+        &-no-drag {
+            -webkit-app-region: no-drag;
+            -moz-app-region: no-drag;
+            -ms-app-region: no-drag;
+        }
+        &-none {
+            -webkit-app-region: none;
+            -moz-app-region: none;
+            -ms-app-region: none;
+        }
+    }
+
+    .user {
+        &-drag {
+            &-none {
+                -webkit-user-drag: none;
+                -moz-user-drag: none;
+                -ms-user-drag: none;
+            }
+            &-auto {
+                -webkit-user-drag: auto;
+                -moz-user-drag: auto;
+                -ms-user-drag: auto;
+            }
+            &-element {
+                -webkit-user-drag: element;
+                -moz-user-drag: element;
+            }
+        }
+        &-select {
+            &-all {
+                user-select: all;
+            }
+            &-auto {
+                user-select: auto;
+            }
+            &-element {
+                user-select: element;
+            }
+            &-text {
+                user-select: text;
+            }
+            &-contain {
+                user-select: contain;
+            }
+            &-none {
+                user-select: none;
+            }
+        }
+        &-modify {
+            &-read-only {
+                -webkit-user-modify: read-only;
+                -moz-user-modify: read-only;
+                -ms-user-modify: read-only;
+            }
+            &-read-write {
+                -webkit-user-modify: read-write;
+                -moz-user-modify: read-write;
+                -ms-user-modify: read-write;
+            }
+            &-read-write-plaintext-only {
+                -webkit-user-modify: read-write-plaintext-only;
+                -moz-user-modify: read-write-plaintext-only;
+                -ms-user-modify: read-write-plaintext-only;
+            }
+        }
+    }
+}
