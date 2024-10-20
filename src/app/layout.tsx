@@ -50,7 +50,7 @@ export default function RootLayout({
             <head>
                 <meta httpEquiv="x-ua-compatible" content="IE=edge" />
             </head>
-            <body>
+            <body className="min-w-[1368px]">
                 <Header />
                 <main>
                     {children}

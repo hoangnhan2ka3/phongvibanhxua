@@ -30,7 +30,7 @@ export default function Footer() {
     const detailInfos = [
         { idx: 2, title: "Mã số DN", content: "0312867172 do sở kế hoạch và đầu tư TP. HCM cấp ngày 23/07/2024." },
         { idx: 3, title: "Người đại diện", content: "(Ông.) Đinh Minh Huân." },
-        { idx: 4, title: "Địa chỉ", content: "86-88 Cao Thắng, phường 04, quận 3, tp Hồ Chí Minh." },
+        { idx: 4, title: "Địa chỉ", content: "86-88 Cao Thắng, phường 04, quận 3, TP. Hồ Chí Minh." },
         { idx: 5, title: "Số điện thoại", content: "(028) 7107 8079." },
         { idx: 6, title: "Email", content: "phongvibanhxua@gmail.com." },
         { idx: 7, title: "Bản quyền", content: "2024-2032 © Công ty cổ phần thương mại dịch vụ Phong Vị mọi quyền bảo lưu." }
@@ -39,7 +39,7 @@ export default function Footer() {
     const { ref, height } = useElementSize()
 
     return (
-        <div style={{ height, paddingBottom: `${height.toString()}px` }} className="-z-2 flex h-[80dvh] w-full items-center justify-center bg-pvbx-dark text-pvbx-light">
+        <div style={{ height, paddingBottom: `${height.toString()}px` }} className="-z-2 flex w-full items-center justify-center bg-pvbx-dark text-pvbx-light">
             <footer ref={ref} className="fixed inset-x-0 bottom-0 w-full">
                 <div className={cn(
                     "relative px-32 py-12"
