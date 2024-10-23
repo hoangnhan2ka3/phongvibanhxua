@@ -16,7 +16,7 @@ export default function Header() {
         { idx: 2, href: "/menu", title: "Menu", expandable: true },
         { idx: 3, href: "/blog", title: "Blog", expandable: true },
         { idx: 4, href: "/about", title: "Về chúng mình" },
-        { idx: 5, href: "/contact", title: "Liên hệ" }
+        { idx: 5, href: "#footer", title: "Liên hệ" }
     ]
 
     const pathname = usePathname()

@@ -77,6 +77,7 @@ export const theme = {
         square: "1 / 1",
         video: "16 / 9",
         banner: "21 / 9",
+        "3/2": "3/2",
         1: "1",
         2: "2",
         3: "3",

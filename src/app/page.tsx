@@ -9,6 +9,7 @@ import Link from "next/link"
 import { useRef } from "react"
 
 import Footer from "@/components/layout/Footer"
+import SectionSeparator from "@/components/layout/SectionSeparator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -27,48 +28,44 @@ export default function Home() {
     )
 
     return (
-        <>
-            <div className="relative z-1">
-                <div className={cn(
-                    "w-full bg-pvbx-light px-32 py-13"
-                )}>
-                    <Carousel
-                        opts={{
-                            loop: true
-                        }}
-                        plugins={[plugin.current, WheelGesturesPlugin()]}
-                        className="w-full select-none"
-                        onMouseEnter={plugin.current.stop}
-                        onMouseLeave={plugin.current.reset}
-                    >
-                        <CarouselContent className="h-full">
-                            {Array.from({ length: 3 }).map((_, index) => (
-                                <CarouselItem key={index}>
-                                    <Card className={cn(
-                                        "bg-green-600"
-                                    )}>
-                                        <CardContent className="flex aspect-banner items-center justify-center p-6">
-                                            <span className="text-4xl font-semibold">{index + 1}</span>
-                                        </CardContent>
-                                    </Card>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </Carousel>
-                </div>
-                <AboutUsSection />
-                <SectionSeparator />
-                <SaleSection />
-                <SectionSeparator />
-                <HighlightedSection />
-                <SectionSeparator />
-                <StorySection />
-                <SectionSeparator />
+        <div className="relative">
+            <div className={cn(
+                "w-full bg-pvbx-light px-32 py-13"
+            )}>
+                <Carousel
+                    opts={{
+                        loop: true
+                    }}
+                    plugins={[plugin.current, WheelGesturesPlugin()]}
+                    className="w-full select-none"
+                    onMouseEnter={plugin.current.stop}
+                    onMouseLeave={plugin.current.reset}
+                >
+                    <CarouselContent className="h-full">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <CarouselItem key={index}>
+                                <Card className={cn(
+                                    "bg-green-600"
+                                )}>
+                                    <CardContent className="flex aspect-banner items-center justify-center p-6">
+                                        <span className="text-4xl font-semibold">{index + 1}</span>
+                                    </CardContent>
+                                </Card>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </Carousel>
             </div>
-            <Footer />
-        </>
+            <AboutUsSection />
+            <SectionSeparator />
+            <SaleSection />
+            <SectionSeparator />
+            <HighlightedSection />
+            <SectionSeparator />
+            <StorySection />
+        </div>
     )
 }
 
@@ -188,7 +185,7 @@ function SaleSection() {
                             <Button type="button" className={cn(
                                 "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                             )}>
-                                Mua ngay
+                                Đặt ngay
                             </Button>
                         </CardContent>
                     </Card>
@@ -218,7 +215,7 @@ function HighlightedSection() {
         <div className={cn(
             "flex w-full flex-col items-center gap-12 bg-pvbx-primary px-32 pb-24"
         )}>
-            <h2 className="mt-16 w-[40.5rem] text-pretty text-center font-serif text-7xl uppercase leading-none text-pvbx-light">
+            <h2 className="mt-16 w-[40.5rem] text-center font-serif text-7xl uppercase leading-none text-pvbx-light">
                 Bánh nổi bật trong tuần
             </h2>
             <div className="relative flex w-full justify-center">
@@ -278,7 +275,7 @@ function HighlightedSection() {
                         <Button variant="secondary" type="button" className={cn(
                             "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                         )}>
-                            Mua ngay
+                            Đặt ngay
                         </Button>
                     </div>
                 ))}
@@ -324,7 +321,7 @@ function HighlightedSection() {
                             <Button variant="secondary" type="button" className={cn(
                                 "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                             )}>
-                                Mua ngay
+                                Đặt ngay
                             </Button>
                         </div>
                     </div>
@@ -364,26 +361,12 @@ function StorySection() {
             <div className={cn(
                 "flex flex-col justify-center gap-8 py-4"
             )}>
-                <h1 className="text-pretty font-serif text-7xl leading-[0.8] text-pvbx-primary">Những câu chuyện chưa kể...</h1>
+                <h1 className="font-serif text-7xl leading-[0.8] text-pvbx-primary">Những câu chuyện chưa kể...</h1>
                 <p>Đội ngũ <span className="font-bold text-pvbx-primary">“Phong vị bánh xưa”</span> mang đến những câu chuyện bên lề của những con người tuy tuổi đã lớn nhưng vẫn ngày đêm miệt mài với công việc làm bánh, không chỉ để bươn chải cuộc sống mà còn giữ gìn những nét đẹp văn hóa ẩm thực Việt Nam đang trên bờ hội nhập...</p>
                 <Link href="/blog" className="w-fit rounded-full bg-pvbx-primary px-4 pb-2 font-serif text-xl uppercase text-pvbx-light">
                     Blog
                 </Link>
             </div>
-        </div>
-    )
-}
-
-export function SectionSeparator() {
-    return (
-        <div className={cn(
-            "h-[90px] w-full bg-pvbx-tertiary bg-[length:45px_45px] bg-[0_0,23px_23px]"
-        )}>
-            <style jsx>{`
-                div {
-                    background-image:  repeating-linear-gradient(45deg, rgb(var(--pvbx-primary)) 25%, transparent 25%, transparent 75%, rgb(var(--pvbx-primary)) 75%, rgb(var(--pvbx-primary))), repeating-linear-gradient(45deg, rgb(var(--pvbx-primary)) 25%, rgb(var(--pvbx-tertiary)) 25%, rgb(var(--pvbx-tertiary)) 75%, rgb(var(--pvbx-primary)) 75%, rgb(var(--pvbx-primary)));
-                }
-            `}</style>
         </div>
     )
 }

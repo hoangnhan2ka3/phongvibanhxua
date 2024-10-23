@@ -31,9 +31,7 @@ export default {
     corePlugins: {
         preflight: false
     },
-    theme: {
-        ...theme
-    },
+    theme,
     plugins: [
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         require("./src/styles/@layers.css"),

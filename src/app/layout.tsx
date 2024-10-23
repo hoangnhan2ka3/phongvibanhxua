@@ -2,7 +2,9 @@ import "@/styles/globals.css"
 
 import { type Metadata, type Viewport } from "next"
 
+import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
+import SectionSeparator from "@/components/layout/SectionSeparator"
 import { appConfig } from "@/configs/app.config"
 import { cn } from "@/lib/utils"
 import * as fonts from "@/styles/fonts"
@@ -50,11 +52,13 @@ export default function RootLayout({
             <head>
                 <meta httpEquiv="x-ua-compatible" content="IE=edge" />
             </head>
-            <body className="min-w-[1368px]">
+            <body className="min-w-[1368px] text-pretty">
                 <Header />
-                <main>
+                <main className="relative z-1">
                     {children}
+                    <SectionSeparator />
                 </main>
+                <Footer />
             </body>
         </html>
     )

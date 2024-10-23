@@ -44,11 +44,16 @@ const buttonVariants = cva(
                         active: "brightness-75"
                     }
                 ),
-                ghost: "hover:bg-accent hover:text-accent-foreground",
+                ghost: cn(
+                    {
+                        hover: "bg-pvbx-primary/10 duration-0",
+                        active: "bg-pvbx-primary/15"
+                    }
+                ),
                 link: "text-primary underline-offset-4 hover:underline"
             },
             size: {
-                default: "h-10 px-2 py-4",
+                default: "px-2 py-4",
                 sm: "h-9 rounded-md px-3",
                 lg: "h-11 rounded-md px-8",
                 icon: "size-10"
