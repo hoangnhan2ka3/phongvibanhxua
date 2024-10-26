@@ -31,8 +31,8 @@ export default function Footer() {
     ]
     const detailInfos = [
         { idx: 1, title: "Người đại diện", content: "(Ông.) Đinh Minh Huân." },
-        { idx: 2, title: "Số điện thoại", content: "(028) 7107 8079." },
-        { idx: 3, title: "Bản quyền", content: "2024-2032 © Công ty cổ phần thương mại dịch vụ Phong Vị mọi quyền bảo lưu." }
+        { idx: 2, title: "Số điện thoại", content: "(028) 7107 8079." }
+        // { idx: 3, title: "Bản quyền", content: "2024-2032 © Công ty cổ phần thương mại dịch vụ Phong Vị mọi quyền bảo lưu." }
     ]
 
     const { ref, height } = useElementSize()
@@ -53,18 +53,37 @@ export default function Footer() {
                         height={594}
                     />
                     <div className={cn(
-                        "flex gap-32"
+                        "flex items-center justify-between gap-12"
                     )}>
-                        <Image
-                            className={cn(
-                                "w-72"
-                            )}
-                            src="/logo/logo_phongvibanhxua.svg"
-                            alt="Phong Vị Bánh Xưa logo"
-                            width={402}
-                            height={118}
-                            priority
-                        />
+                        <div className={cn(
+                            "flex flex-col gap-12"
+                        )}>
+                            <Image
+                                className={cn(
+                                    "w-72"
+                                )}
+                                src="/logo/logo_phongvibanhxua.svg"
+                                alt="Phong Vị Bánh Xưa logo"
+                                width={402}
+                                height={118}
+                                priority
+                            />
+                            <div className={cn(
+                                "flex flex-col gap-4"
+                            )}>
+                                <span className="whitespace-nowrap text-lg font-bold">Công ty cổ phần thương mại dịch vụ Phong Vị</span>
+                                <ul className="list-inside list-disc space-y-2 font-normal">
+                                    {detailInfos.map((info) => {
+                                        return (
+                                            <li key={info.idx}>
+                                                <span className="font-bold">{info.title}:</span>{" "}<span>{info.content}</span>
+
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        </div>
                         <div className="flex flex-col gap-12">
                             <div className={cn(
                                 "flex gap-12"
@@ -151,45 +170,9 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className={cn(
-                    "flex justify-between gap-12 px-32 py-12"
+                    "flex items-center justify-center px-6 py-4 text-sm"
                 )}>
-                    <div className={cn(
-                        "flex flex-col gap-4"
-                    )}>
-                        <span className="whitespace-nowrap text-lg font-bold">Công ty cổ phần thương mại dịch vụ Phong Vị</span>
-                        <ul className="list-inside list-disc space-y-2 font-normal">
-                            {detailInfos.map((info) => {
-                                return (
-                                    <li key={info.idx}>
-                                        <span className="font-bold">{info.title}:</span>{" "}<span>{info.content}</span>
-
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
-                    {/* <div className={cn(
-                        "flex flex-col items-end gap-8"
-                    )}>
-                        <Image
-                            className={cn(
-                                "pointer-events-none w-40 user-drag-none user-select-none"
-                            )}
-                            src="/footer/PVBX__da_thong_bao_bo_cong_thuong.png"
-                            alt="Phong Vị Bánh Xưa đã thông báo bộ Công thương"
-                            width={1405}
-                            height={533}
-                        />
-                        <Image
-                            className={cn(
-                                "pointer-events-none w-20 user-drag-none user-select-none"
-                            )}
-                            src="/footer/PVBX__vien_an_toan_thuc_pham.png"
-                            alt="Phong Vị Bánh Xưa Viện an toàn thực phẩm"
-                            width={200}
-                            height={200}
-                        />
-                    </div> */}
+                    <span>2024 © Công ty cổ phần thương mại dịch vụ Phong Vị mọi quyền bảo lưu.</span>
                 </div>
             </footer>
         </div>

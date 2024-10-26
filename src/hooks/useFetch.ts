@@ -29,7 +29,7 @@ export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseF
 
         setLoading(true)
 
-        return fetch(url, { signal: controller.current.signal, cache: "force-cache", ...options })
+        return fetch(url, { signal: controller.current.signal, ...options })
             .then((res) => res.json())
             .then((res: T) => {
                 setData(res)

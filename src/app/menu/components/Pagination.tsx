@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
 "use client"
 
-import { ShoppingBasket } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -17,6 +15,7 @@ import {
 } from "@/components/ui/card"
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -36,6 +35,8 @@ import {
 import { useFetch } from "@/hooks/useFetch"
 import { cn } from "@/lib/utils"
 
+import AddToCartButton from "./AddToCartButton"
+
 export default function ClientPagination() {
     const [currentPage, setCurrentPage] = useState(1)
     const [cakesPerPage, setCakesPerPage] = useState(currentPage === 1 ? 8 : 9)
@@ -44,30 +45,30 @@ export default function ClientPagination() {
 
     const lastCakeIndex = currentPage * cakesPerPage
     const firstCakeIndex = lastCakeIndex - cakesPerPage
-    const currentCakes = data && data.slice(firstCakeIndex, lastCakeIndex)
+    const currentCakes = data?.slice(firstCakeIndex, lastCakeIndex)
 
     return (
         <div className={cn(
             "flex grow flex-col gap-12"
         )}>
             <div className="grid w-full grid-cols-3 gap-12">
-                {currentCakes && currentCakes.map((cake) => {
+                {currentCakes?.map((cake) => {
                     return (
-                        <Dialog key={cake.id}>
-                            <DialogTrigger asChild>
-                                <Card className={cn(
-                                    "group flex cursor-pointer flex-col items-center justify-center bg-pvbx-quaternary p-2 text-pvbx-dark",
+                        <Card key={cake.id} className={cn(
+                            "group flex flex-col items-center justify-center bg-pvbx-quaternary p-2 text-pvbx-dark",
+                            {
+                                first: currentPage === 1 && [
+                                    "relative col-span-2 h-full flex-row items-start gap-2",
                                     {
-                                        first: currentPage === 1 && [
-                                            "relative col-span-2 h-full flex-row items-start gap-2",
-                                            {
-                                                after: "absolute left-0 top-0 rounded-br-3xl rounded-tl-3xl border-2 border-pvbx-tertiary bg-pvbx-primary px-6 py-2 text-xl font-bold text-pvbx-tertiary content-['Bán_chạy_nhất']"
-                                            }
-                                        ]
+                                        after: "absolute left-0 top-0 rounded-br-3xl rounded-tl-3xl border-2 border-pvbx-tertiary bg-pvbx-primary px-6 py-2 text-xl font-bold text-pvbx-tertiary content-['Bán_chạy_nhất']"
                                     }
-                                )}>
+                                ]
+                            }
+                        )}>
+                            <Dialog>
+                                <DialogTrigger asChild>
                                     <div className={cn(
-                                        "aspect-3/2 h-auto w-full overflow-hidden rounded-2xl",
+                                        "aspect-3/2 h-auto w-full cursor-pointer overflow-hidden rounded-2xl",
                                         {
                                             "group-first": currentPage === 1 && "h-full"
                                         }
@@ -75,6 +76,7 @@ export default function ClientPagination() {
                                         <Image
                                             src={cake.url}
                                             alt={cake.name}
+                                            quality={85}
                                             width={320}
                                             height={270}
                                             className={cn(
@@ -85,117 +87,111 @@ export default function ClientPagination() {
                                             )}
                                         />
                                     </div>
+                                </DialogTrigger>
+                                <DialogContent className={cn(
+                                    "flex gap-6"
+                                )}>
                                     <div className={cn(
-                                        "flex w-full flex-col gap-2",
-                                        {
-                                            "group-first": currentPage === 1 && "h-full justify-between"
-                                        }
+                                        "size-full overflow-hidden rounded-xl"
+                                    )}>
+                                        <Image
+                                            src={cake.url}
+                                            alt={cake.name}
+                                            quality={85}
+                                            width={320}
+                                            height={270}
+                                            className={cn(
+                                                "size-full transform object-cover"
+                                            )}
+                                        />
+                                    </div>
+                                    <div className={cn(
+                                        "flex w-full flex-col items-start justify-between gap-2"
                                     )}>
 
-                                        <CardHeader className={cn(
-                                            "py-2"
+                                        <DialogHeader className={cn(
+                                            "w-full py-4"
                                         )}>
-                                            <CardTitle className={cn(
-                                                "text-center text-base"
-                                            )}>
+                                            <DialogTitle>
                                                 {cake.name}
-                                            </CardTitle>
-                                            <CardDescription className="text-center text-xs">
+                                            </DialogTitle>
+                                            <DialogDescription>
                                                 {cake.ingredients}
-                                            </CardDescription>
-                                        </CardHeader>
+                                            </DialogDescription>
+                                        </DialogHeader>
                                         <div className={cn(
-                                            "flex flex-col gap-2"
+                                            "flex w-full flex-col gap-2"
                                         )}>
-                                            <CardContent className="flex flex-col justify-center gap-2 p-0">
+                                            <div className={cn(
+                                                "flex items-end justify-center gap-2 p-0"
+                                            )}>
                                                 <div className={cn(
-                                                    "flex items-end justify-center gap-2 p-0"
+                                                    "flex flex-1 flex-col items-start gap-1 text-xl"
                                                 )}>
-                                                    <div className={cn(
-                                                        "flex flex-1 flex-col items-start gap-1 text-xl"
-                                                    )}>
-                                                        <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                            {cake.price}.000 VNĐ
-                                                        </span>
-                                                    </div>
-                                                    <Button variant="secondary" type="button" className={cn(
-                                                        "grid h-[40px] flex-1 place-items-center rounded-full py-0"
-                                                    )}>
-                                                        <ShoppingBasket />
-                                                    </Button>
+                                                    <span className="flex h-[40px] w-full items-center whitespace-nowrap pr-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
+                                                        {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
+                                                    </span>
                                                 </div>
-                                            </CardContent>
-                                            <CardFooter>
+                                                <DialogClose asChild>
+                                                    <AddToCartButton product={cake} />
+                                                </DialogClose>
+                                            </div>
+                                            <DialogFooter>
                                                 <Button type="button" className={cn(
                                                     "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                                                 )}>
                                                     Đặt ngay
                                                 </Button>
-                                            </CardFooter>
+                                            </DialogFooter>
                                         </div>
                                     </div>
-                                </Card>
-                            </DialogTrigger>
-                            <DialogContent className={cn(
-                                "flex gap-6"
+                                </DialogContent>
+                            </Dialog>
+                            <div className={cn(
+                                "flex w-full flex-col gap-2",
+                                {
+                                    "group-first": currentPage === 1 && "h-full justify-between"
+                                }
                             )}>
-                                <div className={cn(
-                                    "size-full overflow-hidden rounded-xl"
+                                <CardHeader className={cn(
+                                    "py-2"
                                 )}>
-                                    <Image
-                                        src={cake.url}
-                                        alt={cake.name}
-                                        width={320}
-                                        height={270}
-                                        className={cn(
-                                            "size-full transform object-cover"
-                                        )}
-                                    />
-                                </div>
+                                    <CardTitle className={cn(
+                                        "text-center text-base"
+                                    )}>
+                                        {cake.name}
+                                    </CardTitle>
+                                    <CardDescription className="text-center text-xs">
+                                        {cake.ingredients}
+                                    </CardDescription>
+                                </CardHeader>
                                 <div className={cn(
-                                    "flex w-full flex-col items-start justify-between gap-2"
+                                    "flex flex-col gap-2"
                                 )}>
-
-                                    <DialogHeader className={cn(
-                                        "w-full py-4"
-                                    )}>
-                                        <DialogTitle>
-                                            {cake.name}
-                                        </DialogTitle>
-                                        <DialogDescription>
-                                            {cake.ingredients}
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className={cn(
-                                        "flex w-full flex-col gap-2"
-                                    )}>
+                                    <CardContent className="flex flex-col justify-center gap-2 p-0">
                                         <div className={cn(
                                             "flex items-end justify-center gap-2 p-0"
                                         )}>
                                             <div className={cn(
                                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                                             )}>
-                                                <span className="flex h-[40px] w-full items-center whitespace-nowrap pr-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                    {cake.price}.000 VNĐ
+                                                <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
+                                                    {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                                 </span>
                                             </div>
-                                            <Button variant="secondary" type="button" className={cn(
-                                                "grid h-[40px] flex-1 place-items-center rounded-full py-0"
-                                            )}>
-                                                <ShoppingBasket />
-                                            </Button>
+                                            <AddToCartButton product={cake} />
                                         </div>
-                                        <DialogFooter>
-                                            <Button type="button" className={cn(
-                                                "grid h-[40px] w-full place-items-center rounded-2xl py-0"
-                                            )}>
-                                                Đặt ngay
-                                            </Button>
-                                        </DialogFooter>
-                                    </div>
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Button type="button" className={cn(
+                                            "grid h-[40px] w-full place-items-center rounded-2xl py-0"
+                                        )}>
+                                            Đặt ngay
+                                        </Button>
+                                    </CardFooter>
                                 </div>
-                            </DialogContent>
-                        </Dialog>
+                            </div>
+                        </Card>
                     )
                 })}
             </div>

@@ -3,7 +3,8 @@ export interface CakeTypes {
     name: string,
     ingredients: string,
     price: number,
-    url: string
+    url: string,
+    quantity?: number
 }
 
 export const cakes: CakeTypes[] = [
@@ -111,5 +112,12 @@ export const cakes: CakeTypes[] = [
         ingredients: "Bột gạo, nước cốt dừa, đường,...",
         price: 21,
         url: "/cakes/PVBX__banh_tet_chuoi.png"
+    },
+    {
+        id: 16,
+        name: "Bánh ú",
+        ingredients: "Bột gạo, nước cốt dừa, đường,...",
+        price: 21,
+        url: "/cakes/PVBX__banh_u.png"
     }
 ]

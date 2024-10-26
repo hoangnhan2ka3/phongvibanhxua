@@ -170,10 +170,10 @@ function SaleSection() {
                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                 )}>
                                     <span className="whitespace-nowrap pl-4 text-sm font-semibold text-pvbx-primary/40 line-through">
-                                        {cake.oldPrice}.000 VNĐ
+                                        {(cake.oldPrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                        {cake.salePrice}.000 VNĐ
+                                        {(cake.salePrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="secondary" type="button" className={cn(
@@ -263,7 +263,7 @@ function HighlightedSection() {
                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                             )}>
                                 <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-secondary">
-                                    {cake.price}.000 VNĐ
+                                    {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                 </span>
                             </div>
                             <Button variant="tertiary" type="button" className={cn(
@@ -309,7 +309,7 @@ function HighlightedSection() {
                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                 )}>
                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap text-1.5xl font-semibold leading-none text-pvbx-secondary">
-                                        {cake.price}.000 VNĐ
+                                        {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="tertiary" type="button" className={cn(

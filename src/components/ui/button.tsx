@@ -25,9 +25,9 @@ const buttonVariants = cva(
                 ),
                 destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
                 outline: cn(
-                    "border border-input bg-background",
+                    "border border-pvbx-primary/40 bg-pvbx-background",
                     {
-                        hover: "bg-accent text-accent-foreground"
+                        hover: "bg-pvbx-primary/10 duration-0"
                     }
                 ),
                 secondary: cn(
@@ -53,7 +53,7 @@ const buttonVariants = cva(
                 link: "text-primary underline-offset-4 hover:underline"
             },
             size: {
-                default: "px-2 py-4",
+                default: "px-4 py-2",
                 sm: "h-9 rounded-md px-3",
                 lg: "h-11 rounded-md px-8",
                 icon: "size-10"

@@ -88,6 +88,7 @@
     //! Spell Checker
     "cSpell.words": [
         "autoplace",
+        "autoplay",
         "autoprefixer",
         "Bitness",
         "blockless",
@@ -101,6 +102,7 @@
         "fbsbx",
         "googleusercontent",
         "GTGT",
+        "hookform",
         "limegrass",
         "linebreak",
         "linebreaks",
