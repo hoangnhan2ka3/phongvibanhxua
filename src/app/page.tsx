@@ -30,7 +30,7 @@ export default function Home() {
     return (
         <div className="relative">
             <div className={cn(
-                "w-full bg-pvbx-light px-32 py-13"
+                "w-full bg-pvbx-light px-32 py-12"
             )}>
                 <Carousel
                     opts={{

@@ -87,6 +87,7 @@
     },
     //! Spell Checker
     "cSpell.words": [
+        "appspot",
         "autoplace",
         "autoplay",
         "autoprefixer",
@@ -99,7 +100,9 @@
         "compat",
         "embla",
         "extralight",
+        "fanpage",
         "fbsbx",
+        "firebasestorage",
         "googleusercontent",
         "GTGT",
         "hookform",

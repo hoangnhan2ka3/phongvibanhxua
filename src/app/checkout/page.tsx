@@ -14,7 +14,6 @@ import {
     FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Table,
     TableBody,
@@ -29,23 +28,23 @@ import { useCartStore } from "@/hooks"
 import { cn } from "@/lib/utils"
 
 export default function CheckoutPage() {
-    const { cart, totalItems, totalPrice, addToCart, removeFromCart, removeCakeFromCart } = useCartStore()
+    const { cart, totalItems, totalPrice } = useCartStore()
 
     return (
         <div className={cn(
-            "flex flex-col gap-6 bg-pvbx-light px-32 py-13"
+            "flex min-h-[calc(100dvh-12rem-90px)] flex-col gap-6 bg-pvbx-light px-32 py-12"
         )}>
             <h2 className={cn(
                 "font-serif text-6xl"
             )}>Thanh toán</h2>
-            <div className={cn(
-                "grid grid-cols-3 gap-32"
-            )}>
+            {cart.length > 0 ? (
                 <div className={cn(
-                    "col-span-2 flex flex-col items-center justify-center divide-y-1 divide-pvbx-primary/40 pb-8",
-                    totalItems === 0 ? "min-h-full" : "h-full"
+                    "grid grid-cols-3 gap-32"
                 )}>
-                    {cart.length > 0 ? (
+                    <div className={cn(
+                        "col-span-2 flex flex-col items-center justify-center divide-y-1 divide-pvbx-primary/40 pb-8",
+                        totalItems === 0 ? "min-h-full" : "h-full"
+                    )}>
                         <Table>
                             <TableCaption>Vui lòng kiểm tra lại thông tin đơn hàng.</TableCaption>
                             <TableHeader>
@@ -62,7 +61,7 @@ export default function CheckoutPage() {
                                         <TableCell className="text-center">{String(index + 1).padStart(2, "0")}</TableCell>
                                         <TableCell className="font-bold">{cake.name}</TableCell>
                                         <TableCell>x{cake.quantity?.toLocaleString("vi-VN")}</TableCell>
-                                        <TableCell className="text-right">{(cake.price * 1000).toLocaleString("vi-VN")} VNĐ</TableCell>
+                                        <TableCell className="text-right">{cake.price.toLocaleString("vi-VN")} VNĐ</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -70,26 +69,26 @@ export default function CheckoutPage() {
                                 <TableRow>
                                     <TableCell colSpan={2} className="text-xl font-bold text-pvbx-primary">Tổng cộng</TableCell>
                                     <TableCell className="text-xl font-bold">x{totalItems}</TableCell>
-                                    <TableCell className="text-right text-xl font-bold">{(totalPrice * 1000).toLocaleString("vi-VN")} VNĐ</TableCell>
+                                    <TableCell className="text-right text-xl font-bold">{totalPrice.toLocaleString("vi-VN")} VNĐ</TableCell>
                                 </TableRow>
                             </TableFooter>
                         </Table>
-                    ) : (
-                        <p className={cn(
-                            "text-xl font-semibold text-pvbx-primary"
-                        )}>🥲 Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
-                    )}
-                </div>
-                <div className={cn(
-                    "flex flex-col gap-12"
-                )}>
-                    <div className="grid w-full max-w-sm items-center gap-1.5">
-                        {/* <Label htmlFor="email">Email</Label>
+                    </div>
+                    <div className={cn(
+                        "flex flex-col gap-12"
+                    )}>
+                        <div className="grid w-full max-w-sm items-center gap-1.5">
+                            {/* <Label htmlFor="email">Email</Label>
                         <Input type="email" id="email" placeholder="Email" /> */}
-                        <CheckoutForm />
+                            <CheckoutForm />
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <p className={cn(
+                    "grid size-full grow place-items-center text-xl font-semibold text-pvbx-primary"
+                )}>🥲 Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
+            )}
         </div>
     )
 }
@@ -119,8 +118,6 @@ function CheckoutForm() {
     })
 
     function onSubmit(values: z.infer<typeof CheckoutFormSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values)
     }
 

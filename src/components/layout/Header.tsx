@@ -1,11 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ChevronDown, Minus, Plus, ShoppingBasket, Trash } from "lucide-react"
+import { ChevronDown, CircleUserRound, Minus, Plus, ShoppingBasket, Trash } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +18,14 @@ import {
     DrawerTitle,
     DrawerTrigger
 } from "@/components/ui/drawer"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
+} from "@/components/ui/table"
 import { useCartStore, useShrinkOnScroll } from "@/hooks"
 import { cn } from "@/lib/utils"
 
@@ -108,138 +116,170 @@ function CartButton() {
     const { cart, totalItems, totalPrice, addToCart, removeFromCart, removeCakeFromCart, emptyCart } = useCartStore()
 
     return (
-        <Drawer>
-            <DrawerTrigger asChild>
-                <button className={cn(
-                    "absolute right-0 flex h-full w-32 items-center justify-center gap-2 bg-pvbx-light px-4 font-sans text-pvbx-dark"
-                )}>
-                    <ShoppingBasket size={24} />
-                    {/* <p className="whitespace-nowrap text-xs">Giỏ hàng</p> */}
-                    <span className={cn(
-                        "grid h-5 min-w-5 place-items-center rounded-full bg-pvbx-primary px-1 text-sm leading-none text-pvbx-light"
+        <div className={cn(
+            "absolute right-0 flex h-full w-32 divide-x-1 divide-pvbx-primary bg-pvbx-light"
+        )}>
+            <Drawer>
+                <DrawerTrigger asChild>
+                    <button className={cn(
+                        "flex h-full grow items-center justify-center gap-2 px-2 font-sans text-pvbx-dark",
+                        {
+                            hover: "bg-pvbx-primary/10 duration-0",
+                            active: "bg-pvbx-primary/15"
+                        }
                     )}>
-                        {totalItems}
-                    </span>
-                </button>
-            </DrawerTrigger>
-            <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>Giỏ hàng</DrawerTitle>
-                    <DrawerDescription>Bạn có thể chỉnh sửa sản phẩm đã chọn và thanh toán.</DrawerDescription>
-                </DrawerHeader>
-                <div className={cn(
-                    "flex gap-12 overflow-y-auto px-12"
-                )}>
+                        <ShoppingBasket size={24} />
+                        <span className={cn(
+                            "grid h-5 min-w-5 place-items-center rounded-full bg-pvbx-primary px-1 text-sm leading-none text-pvbx-light"
+                        )}>
+                            {totalItems}
+                        </span>
+                    </button>
+                </DrawerTrigger>
+                <DrawerContent>
+                    <DrawerHeader>
+                        <DrawerTitle className="font-serif text-4xl">Giỏ hàng</DrawerTitle>
+                        <DrawerDescription>Bạn có thể chỉnh sửa sản phẩm đã chọn và thanh toán.</DrawerDescription>
+                    </DrawerHeader>
                     <div className={cn(
-                        "flex grow flex-col items-center justify-center divide-y-1 divide-pvbx-primary/40 pb-8",
-                        totalItems === 0 ? "min-h-full" : "h-full"
+                        "flex gap-12 overflow-y-auto px-12 pb-12"
                     )}>
                         {cart.length > 0 ? (
-                            cart.map((cake, index) => (
-                                <div key={index} className={cn(
-                                    "flex w-full items-center gap-6 p-4"
+                            <Table>
+                                <TableHeader className={cn(
+                                    "sticky top-0 z-2 border-b border-pvbx-primary/40 bg-red-100"
                                 )}>
-                                    <span>{String(index + 1).padStart(2, "0")}.</span>
-                                    <div className={cn(
-                                        "flex w-full items-center gap-6"
-                                    )}>
-                                        <div className={cn(
-                                            "aspect-1 size-36 overflow-hidden rounded-2xl"
-                                        )}>
-                                            <Image
-                                                src={cake.url}
-                                                alt={cake.name}
-                                                quality={85}
-                                                width={320}
-                                                height={270}
-                                                className={cn(
-                                                    "h-[150px] w-auto object-cover transition-transform duration-500 ease-in-out group-hover:scale-105",
-                                                    {
-                                                        "group-first": index === 0 && "h-full"
-                                                    }
-                                                )}
-                                            />
-                                        </div>
-                                        <div className={cn(
-                                            "grid grow auto-cols-fr grid-flow-col items-center gap-2"
-                                        )}>
-                                            <p className="justify-self-start font-bold">{cake.name}</p>
-                                            <p className="justify-self-center">{(cake.price * 1000).toLocaleString("vi-VN")} VNĐ</p>
-                                            <div className={cn(
-                                                "flex items-center justify-center gap-2 justify-self-center"
-                                            )}>
-                                                <Button variant="outline" disabled={cake.quantity! < 2} type="button" className={cn(
-                                                    "grid w-fit place-items-center justify-self-end rounded-full p-2"
-                                                )} onClick={() => {
-                                                    removeFromCart(cake)
-                                                }}>
-                                                    <Minus size={14} color="rgb(var(--pvbx-primary))" />
-                                                </Button>
-                                                <span className="w-6 text-center">{cake.quantity?.toLocaleString("vi-VN")}</span>
-                                                <Button variant="outline" disabled={cake.quantity! > 98} type="button" className={cn(
-                                                    "grid w-fit place-items-center justify-self-end rounded-full p-2"
-                                                )} onClick={() => {
-                                                    addToCart(cake)
-                                                }}>
-                                                    <Plus size={14} color="rgb(var(--pvbx-primary))" />
-                                                </Button>
-                                            </div>
-                                            <Button variant="outline" type="button" className={cn(
-                                                "flex h-[40px] w-fit items-center justify-center gap-2 justify-self-end rounded-full py-0 font-semibold text-pvbx-primary"
-                                            )} onClick={() => {
-                                                removeCakeFromCart(cake)
-                                            }}>
-                                                Xóa <Trash color="rgb(var(--pvbx-primary))" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
+                                    <TableRow>
+                                        <TableHead className="w-13 text-pvbx-primary">STT</TableHead>
+                                        <TableHead className="text-pvbx-primary">Sản phẩm</TableHead>
+                                        <TableHead className="text-pvbx-primary">Đơn giá</TableHead>
+                                        <TableHead className="text-pvbx-primary">Số lượng</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {cart.map((cake, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell className="text-center">{String(index + 1).padStart(2, "0")}</TableCell>
+                                            <TableCell className="flex items-center gap-2 font-bold">
+                                                <div className={cn(
+                                                    "aspect-1 size-36 overflow-hidden rounded-2xl"
+                                                )}>
+                                                    <Image
+                                                        src={cake.images[0].source}
+                                                        alt={cake.images[0].description}
+                                                        quality={85}
+                                                        width={320}
+                                                        height={270}
+                                                        className={cn(
+                                                            "h-[150px] w-auto object-cover transition-transform duration-500 ease-in-out group-hover:scale-105",
+                                                            {
+                                                                "group-first": index === 0 && "h-full"
+                                                            }
+                                                        )}
+                                                    />
+                                                </div>
+                                                <p>{cake.name}</p>
+                                            </TableCell>
+                                            <TableCell>{cake.price.toLocaleString("vi-VN")} VNĐ</TableCell>
+                                            <TableCell>
+                                                <div className={cn(
+                                                    "flex justify-between gap-2 text-right"
+                                                )}>
+                                                    <div className={cn(
+                                                        "flex items-center justify-center gap-2 justify-self-center"
+                                                    )}>
+                                                        <Button variant="outline" disabled={cake.quantity! < 2} type="button" className={cn(
+                                                            "grid w-fit place-items-center justify-self-end rounded-full p-2"
+                                                        )} onClick={() => {
+                                                            removeFromCart(cake)
+                                                        }}>
+                                                            <Minus size={14} color="rgb(var(--pvbx-primary))" />
+                                                        </Button>
+                                                        <span className="w-6 text-center">{cake.quantity?.toLocaleString("vi-VN")}</span>
+                                                        <Button variant="outline" disabled={cake.quantity! > 98} type="button" className={cn(
+                                                            "grid w-fit place-items-center justify-self-end rounded-full p-2"
+                                                        )} onClick={() => {
+                                                            addToCart(cake)
+                                                        }}>
+                                                            <Plus size={14} color="rgb(var(--pvbx-primary))" />
+                                                        </Button>
+                                                    </div>
+                                                    <Button variant="outline" type="button" className={cn(
+                                                        "flex h-[40px] w-fit items-center justify-center gap-2 justify-self-end rounded-full py-0 font-semibold text-pvbx-primary"
+                                                    )} onClick={() => {
+                                                        removeCakeFromCart(cake)
+                                                    }}>
+                                                        Xóa <Trash color="rgb(var(--pvbx-primary))" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
                         ) : (
                             <p className={cn(
-                                "text-xl font-semibold text-pvbx-primary"
+                                "grid grow place-items-center text-xl font-semibold text-pvbx-primary"
                             )}>🥲 Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
                         )}
-                    </div>
-                    <div className={cn(
-                        "sticky top-0 flex flex-col justify-between gap-12 overflow-y-auto pb-12"
-                    )}>
-                        <Button variant="outline" disabled={totalItems === 0} type="button" className={cn(
-                            "flex h-[40px] w-fit items-center justify-center gap-2 rounded-full py-0 text-pvbx-primary"
-                        )} onClick={emptyCart}>
-                            <Trash /> Xóa toàn bộ sản phẩm
-                        </Button>
                         <div className={cn(
-                            "flex flex-col gap-12"
+                            "sticky top-0 flex shrink-0 flex-col justify-between gap-12 overflow-y-auto"
                         )}>
+                            <Button variant="outline" disabled={totalItems === 0} type="button" className={cn(
+                                "flex h-[40px] w-fit items-center justify-center gap-2 rounded-full py-0 text-pvbx-primary"
+                            )} onClick={emptyCart}>
+                                <Trash /> Xóa toàn bộ sản phẩm
+                            </Button>
                             <div className={cn(
-                                "flex flex-col gap-1"
+                                "flex flex-col gap-12"
                             )}>
-                                <h3>Tổng:</h3>
-                                <p className="whitespace-nowrap text-1.5xl font-bold text-pvbx-primary">{totalItems} sản phẩm</p>
+                                <div className={cn(
+                                    "flex flex-col gap-1"
+                                )}>
+                                    <h3>Tổng:</h3>
+                                    <p className="whitespace-nowrap text-1.5xl font-bold text-pvbx-primary">{totalItems} sản phẩm</p>
+                                </div>
+                                <div className={cn(
+                                    "flex flex-col gap-1"
+                                )}>
+                                    <h3>Của bạn hết:</h3>
+                                    <p className="whitespace-nowrap text-1.5xl font-bold text-pvbx-primary">{totalPrice.toLocaleString("vi-VN")} VNĐ</p>
+                                </div>
+                                <DrawerFooter className="grid grid-cols-2 p-0">
+                                    <DrawerClose asChild>
+                                        <Button disabled={totalItems === 0} onClick={() => {
+                                            router.push("/checkout")
+                                        }}>
+                                            Thanh toán
+                                        </Button>
+                                    </DrawerClose>
+                                    <DrawerClose asChild>
+                                        <Button variant="outline">Đóng</Button>
+                                    </DrawerClose>
+                                </DrawerFooter>
                             </div>
-                            <div className={cn(
-                                "flex flex-col gap-1"
-                            )}>
-                                <h3>Của bạn hết:</h3>
-                                <p className="whitespace-nowrap text-1.5xl font-bold text-pvbx-primary">{(totalPrice * 1000).toLocaleString("vi-VN")} VNĐ</p>
-                            </div>
-                            <DrawerFooter className="grid grid-cols-2 p-0">
-                                <DrawerClose asChild>
-                                    <Button disabled={totalItems === 0} onClick={() => {
-                                        router.push("/checkout")
-                                    }}>
-                                        Thanh toán
-                                    </Button>
-                                </DrawerClose>
-                                <DrawerClose asChild>
-                                    <Button variant="outline">Đóng</Button>
-                                </DrawerClose>
-                            </DrawerFooter>
                         </div>
                     </div>
-                </div>
-            </DrawerContent>
-        </Drawer>
+                </DrawerContent>
+            </Drawer>
+            <SignInButton />
+        </div>
+    )
+}
+
+function SignInButton() {
+    const pathname = usePathname()
+    const isInSignInPage = pathname === "/sign-in"
+
+    return (
+        <Link href="/sign-in" className={cn(
+            "grid aspect-1 h-full w-auto place-items-center text-pvbx-dark",
+            isInSignInPage ? "bg-pvbx-primary/15" : {
+                hover: "bg-pvbx-primary/10 duration-0",
+                active: "bg-pvbx-primary/15"
+            }
+        )}>
+            <CircleUserRound size={24} />
+        </Link>
     )
 }

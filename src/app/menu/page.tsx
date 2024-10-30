@@ -14,9 +14,10 @@ import NewCakes from "./components/NewCakes"
 import ClientPagination from "./components/Pagination"
 
 export default function MenuPage() {
+
     return (
         <div className={cn(
-            "flex flex-col gap-12 bg-pvbx-light py-13"
+            "flex flex-col gap-12 bg-pvbx-light py-12"
         )}>
             <NewCakes />
             <SectionSeparator />

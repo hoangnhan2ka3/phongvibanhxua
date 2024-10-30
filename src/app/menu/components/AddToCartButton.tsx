@@ -1,11 +1,11 @@
 import { ShoppingBasket } from "lucide-react"
 
-import { type CakeTypes } from "@/app/api/cakes"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/hooks"
 import { cn } from "@/lib/utils"
+import { type Item } from "@/types/products"
 
-export default function AddToCartButton({ product }: { product: CakeTypes }) {
+export default function AddToCartButton({ product }: { product: Item }) {
     const { addToCart } = useCartStore()
 
     return (

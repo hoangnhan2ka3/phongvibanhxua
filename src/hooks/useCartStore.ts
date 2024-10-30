@@ -1,19 +1,19 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-import { type CakeTypes } from "@/app/api/cakes"
+import { type Item } from "@/types/products"
 
 interface State {
-    cart: CakeTypes[],
+    cart: Item[],
     totalItems: number,
     totalPrice: number
 }
 
 interface Actions {
-    addToCart: (Item: CakeTypes) => void,
-    removeFromCart: (Item: CakeTypes) => void,
+    addToCart: (item: Item) => void,
+    removeFromCart: (item: Item) => void,
     emptyCart: () => void,
-    removeCakeFromCart: (Item: CakeTypes) => void
+    removeCakeFromCart: (item: Item) => void
 }
 
 const INITIAL_STATE: State = {
@@ -26,7 +26,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
     cart: INITIAL_STATE.cart,
     totalItems: INITIAL_STATE.totalItems,
     totalPrice: INITIAL_STATE.totalPrice,
-    addToCart: (cake: CakeTypes) => {
+    addToCart: (cake) => {
         const cart = get().cart
         const cartItem = cart.find((item) => item.id === cake.id)
 
@@ -51,7 +51,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             }))
         }
     },
-    removeFromCart: (cake: CakeTypes) => {
+    removeFromCart: (cake) => {
         const cart = get().cart
         const cartItem = cart.find((item) => item.id === cake.id)
 
@@ -74,7 +74,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             }))
         }
     },
-    removeCakeFromCart: (cake: CakeTypes) => {
+    removeCakeFromCart: (cake) => {
         set((state) => {
             const cartItem = state.cart.find((item) => item.id === cake.id)
             const quantityToRemove = cartItem?.quantity ?? 0
@@ -96,16 +96,4 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
     }
 }), {
     name: "cart-storage"
-    // getStorage: () => sessionStorage, (optional) by default the 'localStorage' is used
-    // version: 1, // State version number,
-    // migrate: (persistedState: unknown, version: number) => {
-    // 	if (version === 0) {
-    // 		// if the stored value is in version 0, we rename the field to the new name
-    // 		persistedState.totalCakes = persistedState.totalItems
-    // 		delete persistedState.totalItems
-    // 	}
-
-    // 	return persistedState as State & Actions
-    // },
-}
-))
+}))

@@ -2,8 +2,8 @@
 
 import { ChevronRight } from "lucide-react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
-import { type CakeTypes } from "@/app/api/cakes"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -18,14 +18,21 @@ import {
 } from "@/components/ui/dialog"
 import { useFetch } from "@/hooks/useFetch"
 import { cn } from "@/lib/utils"
+import { type ProductData } from "@/types/products"
 
 import AddToCartButton from "./AddToCartButton"
 
 export default function NewCakes() {
-    const { data, loading } = useFetch<CakeTypes[]>("/api/cakes")
+    const { data, loading } = useFetch<ProductData>(
+        "https://phongvibanhxua-be-apis.onrender.com/store/api/v1/products"
+    )
 
-    const newCakeIds = [9, 14, 16]
-    const newCakes = data?.filter((cake) => newCakeIds.includes(cake.id))
+    const newCakeIds = [13, 5, 12]
+    const newCakes = data?.items
+        .filter((cake) => newCakeIds.includes(cake.id))
+        .sort((a, b) => newCakeIds.indexOf(a.id) - newCakeIds.indexOf(b.id))
+
+    const router = useRouter()
 
     return (
         <div className={cn(
@@ -51,8 +58,8 @@ export default function NewCakes() {
                                         "m-0 flex size-full items-center justify-center p-0"
                                     )}>
                                         <Image
-                                            src={cake.url}
-                                            alt={cake.name}
+                                            src={cake.images[0].source}
+                                            alt={cake.images[0].description}
                                             quality={85}
                                             width={320}
                                             height={270}
@@ -86,8 +93,8 @@ export default function NewCakes() {
                                     "size-full overflow-hidden rounded-xl"
                                 )}>
                                     <Image
-                                        src={cake.url}
-                                        alt={cake.name}
+                                        src={cake.images[0].source}
+                                        alt={cake.images[0].description}
                                         quality={85}
                                         width={320}
                                         height={270}
@@ -107,7 +114,7 @@ export default function NewCakes() {
                                             {cake.name}
                                         </DialogTitle>
                                         <DialogDescription>
-                                            {cake.ingredients}
+                                            {cake.description}
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className={cn(
@@ -120,7 +127,7 @@ export default function NewCakes() {
                                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                                             )}>
                                                 <span className="flex h-[40px] w-full items-center whitespace-nowrap pr-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                    {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
+                                                    {cake.price.toLocaleString("vi-VN")} VNĐ
                                                 </span>
                                             </div>
                                             <DialogClose asChild>
@@ -128,7 +135,7 @@ export default function NewCakes() {
                                             </DialogClose>
                                         </div>
                                         <DialogFooter>
-                                            <Button type="button" className={cn(
+                                            <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
                                                 "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                                             )}>
                                                 Đặt ngay

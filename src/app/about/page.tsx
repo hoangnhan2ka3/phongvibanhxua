@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 export default function AboutPage() {
     return (
         <div className={cn(
-            "grid h-dvh place-items-center bg-pvbx-light font-serif text-7xl"
+            "grid min-h-[calc(100dvh-12rem-90px)] place-items-center bg-pvbx-light font-serif text-7xl"
         )}>
             <h1 className={cn(
                 "opacity-50"

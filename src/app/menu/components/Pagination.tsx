@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { type CakeTypes } from "@/app/api/cakes"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -34,18 +34,25 @@ import {
 } from "@/components/ui/pagination"
 import { useFetch } from "@/hooks/useFetch"
 import { cn } from "@/lib/utils"
+import { type ProductData } from "@/types/products"
 
 import AddToCartButton from "./AddToCartButton"
 
+const MAX_CAKES_PER_PAGE = 9
+
 export default function ClientPagination() {
     const [currentPage, setCurrentPage] = useState(1)
-    const [cakesPerPage, setCakesPerPage] = useState(currentPage === 1 ? 8 : 9)
+    const [cakesPerPage, setCakesPerPage] = useState(currentPage === 1 ? (MAX_CAKES_PER_PAGE - 1) : MAX_CAKES_PER_PAGE)
 
-    const { data, loading } = useFetch<CakeTypes[]>("/api/cakes")
+    const { data, loading } = useFetch<ProductData>(
+        "https://phongvibanhxua-be-apis.onrender.com/store/api/v1/products"
+    )
 
     const lastCakeIndex = currentPage * cakesPerPage
     const firstCakeIndex = lastCakeIndex - cakesPerPage
-    const currentCakes = data?.slice(firstCakeIndex, lastCakeIndex)
+    const currentCakes = data?.items.slice(firstCakeIndex, lastCakeIndex)
+
+    const router = useRouter()
 
     return (
         <div className={cn(
@@ -74,8 +81,8 @@ export default function ClientPagination() {
                                         }
                                     )}>
                                         <Image
-                                            src={cake.url}
-                                            alt={cake.name}
+                                            src={cake.images[0].source}
+                                            alt={cake.images[0].description}
                                             quality={85}
                                             width={320}
                                             height={270}
@@ -95,8 +102,8 @@ export default function ClientPagination() {
                                         "size-full overflow-hidden rounded-xl"
                                     )}>
                                         <Image
-                                            src={cake.url}
-                                            alt={cake.name}
+                                            src={cake.images[0].source}
+                                            alt={cake.images[0].description}
                                             quality={85}
                                             width={320}
                                             height={270}
@@ -116,7 +123,7 @@ export default function ClientPagination() {
                                                 {cake.name}
                                             </DialogTitle>
                                             <DialogDescription>
-                                                {cake.ingredients}
+                                                {cake.description}
                                             </DialogDescription>
                                         </DialogHeader>
                                         <div className={cn(
@@ -129,7 +136,7 @@ export default function ClientPagination() {
                                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                                 )}>
                                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap pr-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                        {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
+                                                        {cake.price.toLocaleString("vi-VN")} VNĐ
                                                     </span>
                                                 </div>
                                                 <DialogClose asChild>
@@ -137,7 +144,7 @@ export default function ClientPagination() {
                                                 </DialogClose>
                                             </div>
                                             <DialogFooter>
-                                                <Button type="button" className={cn(
+                                                <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
                                                     "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                                                 )}>
                                                     Đặt ngay
@@ -154,15 +161,15 @@ export default function ClientPagination() {
                                 }
                             )}>
                                 <CardHeader className={cn(
-                                    "py-2"
+                                    "p-2"
                                 )}>
                                     <CardTitle className={cn(
-                                        "text-center text-base"
+                                        "line-clamp-1 text-center text-base"
                                     )}>
                                         {cake.name}
                                     </CardTitle>
-                                    <CardDescription className="text-center text-xs">
-                                        {cake.ingredients}
+                                    <CardDescription className="line-clamp-2 text-center text-xs">
+                                        {cake.description}
                                     </CardDescription>
                                 </CardHeader>
                                 <div className={cn(
@@ -176,14 +183,14 @@ export default function ClientPagination() {
                                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                                             )}>
                                                 <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                    {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
+                                                    {cake.price.toLocaleString("vi-VN")} VNĐ
                                                 </span>
                                             </div>
                                             <AddToCartButton product={cake} />
                                         </div>
                                     </CardContent>
                                     <CardFooter>
-                                        <Button type="button" className={cn(
+                                        <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
                                             "grid h-[40px] w-full place-items-center rounded-2xl py-0"
                                         )}>
                                             Đặt ngay
@@ -195,12 +202,14 @@ export default function ClientPagination() {
                     )
                 })}
             </div>
-            <CakesPagination
-                totalPosts={data ? data.length : 0}
-                cakesPerPage={cakesPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
+            {data && data.items.length > MAX_CAKES_PER_PAGE && (
+                <CakesPagination
+                    totalPosts={data.items.length}
+                    cakesPerPage={cakesPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            )}
         </div>
     )
 }
