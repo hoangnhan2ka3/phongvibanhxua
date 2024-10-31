@@ -1,19 +1,20 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-import { type Item } from "@/types/products"
+import { type Item } from "@/types/cakes"
+import { type SetItem } from "@/types/combos"
 
 interface State {
-    cart: Item[],
+    cart: Item[] | SetItem[],
     totalItems: number,
     totalPrice: number
 }
 
 interface Actions {
-    addToCart: (item: Item) => void,
-    removeFromCart: (item: Item) => void,
+    addToCart: (item: Item | SetItem) => void,
+    removeFromCart: (item: Item | SetItem) => void,
     emptyCart: () => void,
-    removeCakeFromCart: (item: Item) => void
+    removeProductFromCart: (item: Item | SetItem) => void
 }
 
 const INITIAL_STATE: State = {
@@ -26,62 +27,62 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
     cart: INITIAL_STATE.cart,
     totalItems: INITIAL_STATE.totalItems,
     totalPrice: INITIAL_STATE.totalPrice,
-    addToCart: (cake) => {
+    addToCart: (product) => {
         const cart = get().cart
-        const cartItem = cart.find((item) => item.id === cake.id)
+        const cartItem = cart.find((item) => item.id === product.id)
 
         if (cartItem) {
             const updatedCart = cart.map((item) =>
-            (item.id === cake.id
+            (item.id === product.id
                 ? { ...item, quantity: (item.quantity!) + 1 }
                 : item
             ))
             set((state) => ({
-                cart: updatedCart,
+                cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems + 1,
-                totalPrice: state.totalPrice + cake.price
+                totalPrice: state.totalPrice + product.price
             }))
         } else {
-            const updatedCart = [...cart, { ...cake, quantity: 1 }]
+            const updatedCart = [...cart, { ...product, quantity: 1 }]
 
             set((state) => ({
-                cart: updatedCart,
+                cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems + 1,
-                totalPrice: state.totalPrice + cake.price
+                totalPrice: state.totalPrice + product.price
             }))
         }
     },
-    removeFromCart: (cake) => {
+    removeFromCart: (product) => {
         const cart = get().cart
-        const cartItem = cart.find((item) => item.id === cake.id)
+        const cartItem = cart.find((item) => item.id === product.id)
 
         if (cartItem?.quantity && cartItem.quantity > 1) {
             const updatedCart = cart.map((item) =>
-            (item.id === cake.id
+            (item.id === product.id
                 ? { ...item, quantity: (item.quantity!) - 1 }
                 : item
             ))
             set((state) => ({
-                cart: updatedCart,
+                cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems - 1,
-                totalPrice: state.totalPrice - cake.price
+                totalPrice: state.totalPrice - product.price
             }))
         } else {
             set((state) => ({
-                cart: state.cart.filter((item) => item.id !== cake.id),
+                cart: state.cart.filter((item) => item.id !== product.id) as Item[] | SetItem[],
                 totalItems: state.totalItems - 1,
-                totalPrice: state.totalPrice - cake.price
+                totalPrice: state.totalPrice - product.price
             }))
         }
     },
-    removeCakeFromCart: (cake) => {
+    removeProductFromCart: (product) => {
         set((state) => {
-            const cartItem = state.cart.find((item) => item.id === cake.id)
+            const cartItem = state.cart.find((item) => item.id === product.id)
             const quantityToRemove = cartItem?.quantity ?? 0
             const priceToRemove = cartItem ? cartItem.price * quantityToRemove : 0
 
             return {
-                cart: state.cart.filter((item) => item.id !== cake.id),
+                cart: state.cart.filter((item) => item.id !== product.id) as Item[] | SetItem[],
                 totalItems: state.totalItems - quantityToRemove,
                 totalPrice: state.totalPrice - priceToRemove
             }

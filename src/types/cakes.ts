@@ -44,9 +44,9 @@ interface Item {
     quantity?: number
 }
 
-interface ProductData {
+interface CakesData {
     totalItems: number,
     items: Item[]
 }
 
-export { type Item, type ProductData }
+export { type CakesData, type Item }

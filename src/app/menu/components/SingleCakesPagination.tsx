@@ -1,10 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -23,37 +21,30 @@ import {
     DialogTitle,
     DialogTrigger
 } from "@/components/ui/dialog"
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious
-} from "@/components/ui/pagination"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useFetch } from "@/hooks/useFetch"
 import { cn } from "@/lib/utils"
-import { type ProductData } from "@/types/products"
+import { type CakesData } from "@/types/cakes"
 
 import AddToCartButton from "./AddToCartButton"
+import OrderNowButton from "./OrderNowButton"
+import TabsPagination from "./TabsPagination"
 
 const MAX_CAKES_PER_PAGE = 9
 
-export default function ClientPagination() {
+export default function SingleCakesPagination() {
     const [currentPage, setCurrentPage] = useState(1)
-    const [cakesPerPage, setCakesPerPage] = useState(currentPage === 1 ? (MAX_CAKES_PER_PAGE - 1) : MAX_CAKES_PER_PAGE)
+    const [cakesPerPage, setCakesPerPage] = useState(
+        currentPage === 1 ? (MAX_CAKES_PER_PAGE - 1) : MAX_CAKES_PER_PAGE
+    )
 
-    const { data, loading } = useFetch<ProductData>(
+    const { data, loading } = useFetch<CakesData>(
         "https://phongvibanhxua-be-apis.onrender.com/store/api/v1/products"
     )
 
     const lastCakeIndex = currentPage * cakesPerPage
     const firstCakeIndex = lastCakeIndex - cakesPerPage
     const currentCakes = data?.items.slice(firstCakeIndex, lastCakeIndex)
-
-    const router = useRouter()
 
     return (
         <div className={cn(
@@ -66,8 +57,8 @@ export default function ClientPagination() {
                     <Skeleton className={cn(
                         "col-span-2 h-[360px] w-full"
                     )} />
-                    {Array.from({ length: 7 }).map((_, index) => (
-                        <Skeleton key={index} className={cn(
+                    {Array.from({ length: 7 }).map((_, idx) => (
+                        <Skeleton key={idx} className={cn(
                             "h-[360px] w-full"
                         )} />
                     ))}
@@ -77,12 +68,12 @@ export default function ClientPagination() {
                     {currentCakes?.map((cake) => {
                         return (
                             <Card key={cake.id} className={cn(
-                                "group flex flex-col items-center justify-center bg-pvbx-quaternary p-2 text-pvbx-dark",
+                                "group flex h-[360px] w-full flex-col items-center justify-center bg-pvbx-quaternary p-2 text-pvbx-dark",
                                 {
                                     first: currentPage === 1 && [
-                                        "relative col-span-2 h-full flex-row items-start gap-2",
+                                        "relative col-span-2 h-[360px] flex-row items-start gap-2",
                                         {
-                                            after: "absolute left-0 top-0 rounded-br-3xl rounded-tl-3xl border-2 border-pvbx-tertiary bg-pvbx-primary px-6 py-2 text-xl font-bold text-pvbx-tertiary content-['Bán_chạy_nhất']"
+                                            after: "absolute left-0 top-0 rounded-br-3xl rounded-tl-3xl border-2 border-pvbx-quaternary bg-pvbx-primary px-6 py-2 text-xl font-bold text-pvbx-quaternary content-['Bán_chạy_nhất']"
                                         }
                                     ]
                                 }
@@ -102,7 +93,7 @@ export default function ClientPagination() {
                                                 width={320}
                                                 height={270}
                                                 className={cn(
-                                                    "h-[270px] w-full transform object-cover transition-transform duration-500 ease-in-out group-hover:scale-105",
+                                                    "h-[270px] w-auto transform object-cover transition-transform duration-500 ease-in-out group-hover:scale-105",
                                                     {
                                                         "group-first": currentPage === 1 && "h-full"
                                                     }
@@ -159,31 +150,38 @@ export default function ClientPagination() {
                                                     </DialogClose>
                                                 </div>
                                                 <DialogFooter>
-                                                    <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
-                                                        "grid h-[40px] w-full place-items-center rounded-2xl py-0"
-                                                    )}>
-                                                        Đặt ngay
-                                                    </Button>
+                                                    <OrderNowButton product={cake} />
                                                 </DialogFooter>
                                             </div>
                                         </div>
                                     </DialogContent>
                                 </Dialog>
                                 <div className={cn(
-                                    "flex w-full flex-col gap-2",
+                                    "flex w-full flex-col justify-between gap-1",
                                     {
                                         "group-first": currentPage === 1 && "h-full justify-between"
                                     }
                                 )}>
                                     <CardHeader className={cn(
-                                        "p-2"
+                                        "p-2",
+                                        {
+                                            "group-first": "gap-4 pt-4"
+                                        }
                                     )}>
                                         <CardTitle className={cn(
-                                            "line-clamp-1 text-center text-base"
+                                            "line-clamp-1 text-center text-base",
+                                            {
+                                                "group-first": "text-start text-xl"
+                                            }
                                         )}>
                                             {cake.name}
                                         </CardTitle>
-                                        <CardDescription className="line-clamp-2 text-center text-xs">
+                                        <CardDescription className={cn(
+                                            "line-clamp-2 text-center text-xs",
+                                            {
+                                                "group-first": "line-clamp-none text-start text-sm"
+                                            }
+                                        )}>
                                             {cake.description}
                                         </CardDescription>
                                     </CardHeader>
@@ -205,11 +203,7 @@ export default function ClientPagination() {
                                             </div>
                                         </CardContent>
                                         <CardFooter>
-                                            <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
-                                                "grid h-[40px] w-full place-items-center rounded-2xl py-0"
-                                            )}>
-                                                Đặt ngay
-                                            </Button>
+                                            <OrderNowButton product={cake} />
                                         </CardFooter>
                                     </div>
                                 </div>
@@ -219,105 +213,13 @@ export default function ClientPagination() {
                 </div>
             )}
             {data && data.items.length > MAX_CAKES_PER_PAGE && (
-                <CakesPagination
+                <TabsPagination
                     totalPosts={data.items.length}
-                    cakesPerPage={cakesPerPage}
+                    productsPerPage={cakesPerPage}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                 />
             )}
-        </div>
-    )
-}
-
-function CakesPagination({
-    totalPosts,
-    cakesPerPage,
-    currentPage,
-    setCurrentPage
-}: {
-    totalPosts: number,
-    cakesPerPage: number,
-    currentPage: number,
-    setCurrentPage: (page: number) => void
-}) {
-    const pageNumbers = []
-    for (let i = 1; i <= Math.ceil(totalPosts / cakesPerPage); i++) {
-        pageNumbers.push(i)
-    }
-
-    const maxPageNum = 5 // Maximum page numbers to display at once
-    const pageNumLimit = Math.floor(maxPageNum / 2) // Current page should be in the middle if possible
-
-    const activePages = pageNumbers.slice(
-        Math.max(0, currentPage - 1 - pageNumLimit),
-        Math.min(currentPage - 1 + pageNumLimit + 1, pageNumbers.length)
-    )
-
-    const handleNextPage = () => {
-        if (currentPage < pageNumbers.length) {
-            setCurrentPage(currentPage + 1)
-        }
-    }
-
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
-        }
-    }
-
-    // Function to render page numbers with ellipsis
-    const renderPages = () => {
-        const renderedPages = activePages.map((page, idx) => (
-            <PaginationItem key={idx}>
-                <PaginationLink
-                    type="button"
-                    isActive={currentPage === page}
-                    onClick={() => { setCurrentPage(page) }}
-                >
-                    {page}
-                </PaginationLink>
-            </PaginationItem>
-        ))
-
-        // Add ellipsis at the start if necessary
-        if (activePages[0] > 1) {
-            renderedPages.unshift(
-                <PaginationEllipsis
-                    key="ellipsis-start"
-                    onClick={() => { setCurrentPage(activePages[0] - 1) }}
-                />
-            )
-        }
-
-        // Add ellipsis at the end if necessary
-        if (activePages[activePages.length - 1] < pageNumbers.length) {
-            renderedPages.push(
-                <PaginationEllipsis
-                    key="ellipsis-end"
-                    onClick={() => {
-                        setCurrentPage(activePages[activePages.length - 1] + 1)
-                    }}
-                />
-            )
-        }
-
-        return renderedPages
-    }
-
-    return (
-        <div>
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious type="button" onClick={handlePrevPage} />
-                    </PaginationItem>
-                    {renderPages()}
-                    <PaginationItem>
-                        <PaginationNext type="button" onClick={handleNextPage} />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
         </div>
     )
 }

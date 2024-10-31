@@ -7,6 +7,17 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useRef } from "react"
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
     Drawer,
@@ -119,7 +130,7 @@ export default function Header() {
 function CartButton() {
     const router = useRouter()
 
-    const { cart, totalItems, totalPrice, addToCart, removeFromCart, removeCakeFromCart, emptyCart } = useCartStore()
+    const { cart, totalItems, totalPrice, addToCart, removeFromCart, removeProductFromCart, emptyCart } = useCartStore()
 
     return (
         <div className={cn(
@@ -174,23 +185,36 @@ function CartButton() {
                                         {cart.map((cake, index) => (
                                             <TableRow key={index}>
                                                 <TableCell className="text-center">{String(index + 1).padStart(2, "0")}</TableCell>
-                                                <TableCell className="flex items-center gap-2 font-bold">
+                                                <TableCell className="flex items-center gap-4 font-bold">
                                                     <div className={cn(
                                                         "aspect-1 size-36 overflow-hidden rounded-2xl"
                                                     )}>
-                                                        <Image
-                                                            src={cake.images[0].source}
-                                                            alt={cake.images[0].description}
-                                                            quality={85}
-                                                            width={320}
-                                                            height={270}
-                                                            className={cn(
-                                                                "h-[150px] w-auto object-cover transition-transform duration-500 ease-in-out group-hover:scale-105",
-                                                                {
-                                                                    "group-first": index === 0 && "h-full"
-                                                                }
-                                                            )}
-                                                        />
+                                                        {"images" in cake ? (
+                                                            <Image
+                                                                src={cake.images[0].source}
+                                                                alt={cake.images[0].description}
+                                                                quality={85}
+                                                                width={320}
+                                                                height={270}
+                                                                className={cn(
+                                                                    "h-[150px] w-auto object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                                                )}
+                                                            />
+                                                        ) : (
+                                                            <div className={cn(
+                                                                "grid h-[150px] w-auto place-items-center bg-pvbx-primary"
+                                                            )}>
+                                                                <Image
+                                                                    src="/star_15.svg"
+                                                                    alt=""
+                                                                    width={264}
+                                                                    height={264}
+                                                                    className={cn(
+                                                                        "h-2/3 w-auto"
+                                                                    )}
+                                                                />
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     <p>{cake.name}</p>
                                                 </TableCell>
@@ -221,7 +245,7 @@ function CartButton() {
                                                         <Button variant="outline" type="button" className={cn(
                                                             "flex h-[40px] w-fit items-center justify-center gap-2 justify-self-end rounded-full py-0 font-semibold text-pvbx-primary"
                                                         )} onClick={() => {
-                                                            removeCakeFromCart(cake)
+                                                            removeProductFromCart(cake)
                                                         }}>
                                                             Xóa <Trash color="rgb(var(--pvbx-primary))" />
                                                         </Button>
@@ -239,11 +263,28 @@ function CartButton() {
                             <div className={cn(
                                 "sticky top-0 flex shrink-0 flex-col justify-between gap-12 overflow-y-auto"
                             )}>
-                                <Button variant="outline" disabled={totalItems === 0} type="button" className={cn(
-                                    "flex h-[40px] w-fit items-center justify-center gap-2 rounded-full py-0 text-pvbx-primary"
-                                )} onClick={emptyCart}>
-                                    <Trash /> Xóa toàn bộ sản phẩm
-                                </Button>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="outline" disabled={totalItems === 0} type="button" className={cn(
+                                            "flex min-h-[40px] w-fit items-center justify-center gap-2 rounded-full py-0 text-pvbx-primary"
+                                        )}>
+                                            <Trash /> Xóa toàn bộ sản phẩm
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Bạn có chắc chưa?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Nhấn "Xóa toàn bộ sản phẩm" sẽ lập tức xóa toàn bộ sản phẩm trong giỏ hàng.
+                                                Hành động này không thể hoàn tác, vui lòng suy nghĩ kỹ.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Hủy</AlertDialogCancel>
+                                            <AlertDialogAction onClick={emptyCart}>Xóa toàn bộ sản phẩm</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                                 <div className={cn(
                                     "flex flex-col gap-12"
                                 )}>

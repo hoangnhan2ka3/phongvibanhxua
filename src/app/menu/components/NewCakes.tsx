@@ -19,12 +19,13 @@ import {
 import { Skeleton } from "@/components/ui/skeleton"
 import { useFetch } from "@/hooks/useFetch"
 import { cn } from "@/lib/utils"
-import { type ProductData } from "@/types/products"
+import { type CakesData } from "@/types/cakes"
 
 import AddToCartButton from "./AddToCartButton"
+import OrderNowButton from "./OrderNowButton"
 
 export default function NewCakes() {
-    const { data, loading } = useFetch<ProductData>(
+    const { data, loading } = useFetch<CakesData>(
         "https://phongvibanhxua-be-apis.onrender.com/store/api/v1/products"
     )
 
@@ -149,11 +150,7 @@ export default function NewCakes() {
                                                 </DialogClose>
                                             </div>
                                             <DialogFooter>
-                                                <Button type="button" onClick={() => { router.push("/checkout") }} className={cn(
-                                                    "grid h-[40px] w-full place-items-center rounded-2xl py-0"
-                                                )}>
-                                                    Đặt ngay
-                                                </Button>
+                                                <OrderNowButton product={cake} />
                                             </DialogFooter>
                                         </div>
                                     </div>

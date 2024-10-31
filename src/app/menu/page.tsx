@@ -10,8 +10,9 @@ import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 
+import CombosPagination from "./components/CombosPagination"
 import NewCakes from "./components/NewCakes"
-import ClientPagination from "./components/Pagination"
+import SingleCakesPagination from "./components/SingleCakesPagination"
 
 export default function MenuPage() {
 
@@ -57,10 +58,12 @@ export default function MenuPage() {
                 <TabsContent value="cake" className={cn(
                     "w-full"
                 )}>
-                    <ClientPagination />
+                    <SingleCakesPagination />
                 </TabsContent>
-                <TabsContent value="combo">
-                    Show combo here.
+                <TabsContent value="combo" className={cn(
+                    "w-full"
+                )}>
+                    <CombosPagination />
                 </TabsContent>
             </Tabs>
         </div>

@@ -128,7 +128,7 @@ function CheckoutForm() {
             <form onSubmit={(e) => {
                 e.preventDefault()
                 void checkoutForm.handleSubmit(onSubmit)(e)
-            }} className="w-2/3 space-y-6">
+            }} className="space-y-6">
                 <FormField
                     control={checkoutForm.control}
                     name="name"
