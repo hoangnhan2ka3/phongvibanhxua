@@ -8,7 +8,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
-import Footer from "@/components/layout/Footer"
 import SectionSeparator from "@/components/layout/SectionSeparator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

@@ -34,8 +34,8 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             const updatedCart = cart.map((item) =>
             (item.id === cake.id
                 ? { ...item, quantity: (item.quantity!) + 1 }
-                : item)
-            )
+                : item
+            ))
             set((state) => ({
                 cart: updatedCart,
                 totalItems: state.totalItems + 1,
@@ -59,8 +59,8 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             const updatedCart = cart.map((item) =>
             (item.id === cake.id
                 ? { ...item, quantity: (item.quantity!) - 1 }
-                : item)
-            )
+                : item
+            ))
             set((state) => ({
                 cart: updatedCart,
                 totalItems: state.totalItems - 1,

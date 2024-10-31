@@ -54,7 +54,9 @@ export default function MenuPage() {
                 <TabsContent value="all">
                     Show all categories here.
                 </TabsContent>
-                <TabsContent value="cake">
+                <TabsContent value="cake" className={cn(
+                    "w-full"
+                )}>
                     <ClientPagination />
                 </TabsContent>
                 <TabsContent value="combo">
