@@ -16,6 +16,7 @@
     "packageManager": "pnpm@9.12.3+sha256.24235772cc4ac82a62627cd47f834c72667a2ce87799a846ec4e8e555e2d4b8b",
     "type": "module",
     "exports": {
+        "./src/configs/axios": "./src/configs/axios.ts",
         "./package.json": "./package.json"
     },
     "scripts": {
@@ -41,6 +42,8 @@
         "@radix-ui/react-slot": "^1.1.0",
         "@radix-ui/react-tabs": "^1.1.1",
         "@radix-ui/react-tooltip": "^1.1.3",
+        "@reduxjs/toolkit": "^2.3.0",
+        "axios": "^1.7.7",
         "babel-plugin-react-compiler": "19.0.0-beta-6fc168f-20241025",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",

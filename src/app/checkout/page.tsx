@@ -26,6 +26,9 @@ import {
 } from "@/components/ui/table"
 import { useCartStore } from "@/hooks"
 import { cn } from "@/lib/utils"
+import axios from "axios"
+import { useUserStore } from "@/hooks/userLogin"
+import { useEffect, useState } from "react"
 
 export default function CheckoutPage() {
     const { cart, totalItems, totalPrice } = useCartStore()
@@ -67,7 +70,7 @@ export default function CheckoutPage() {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={2} className="text-xl font-bold text-pvbx-primary">Tổng cộng</TableCell>
+                                    <TableCell colSpan={2} className="text-xl font-bold text-pvbx-primary"></TableCell>
                                     <TableCell className="text-xl font-bold">x{totalItems}</TableCell>
                                     <TableCell className="text-right text-xl font-bold">{totalPrice.toLocaleString("vi-VN")} VNĐ</TableCell>
                                 </TableRow>
@@ -88,22 +91,33 @@ export default function CheckoutPage() {
                 <p className={cn(
                     "grid size-full grow place-items-center text-xl font-semibold text-pvbx-primary"
                 )}>🥲 Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
-            )}
-        </div>
+            )
+            }
+        </div >
     )
 }
 
 const CheckoutFormSchema = z.object({
-    name: z.string({ required_error: "Name is required" }).min(2, {
-        message: "Tên của bạn phải có ít nhất 2 ký tự"
+    receiverName: z.string().min(2, {
+        message: "Tên người nhận không được để trống",
     }),
-    phone: z.string({ required_error: "Phone is required" }).min(10, {
-        message: "Số điện thoại phải chứa ít nhất 10 ký tự"
+    contactNumber: z.string().min(10, {
+        message: "Số điện thoại phải chứa ít nhất 10 ký tự",
     }),
-    email: z.string({ required_error: "Email is required" }).email({
-        message: "Email không hợp lệ"
-    })
-})
+    description: z.string().optional(),
+    street: z.string().min(1, {
+        message: "Tên đường không được để trống",
+    }),
+    ward: z.string().min(1, {
+        message: "Phường không được để trống",
+    }),
+    wardCode: z.string().optional(),
+    district: z.string().min(1, {
+        message: "Huyện không được để trống",
+    }),
+    districtId: z.number().optional(),
+    isDefault: z.boolean().optional(),
+});
 
 function CheckoutForm() {
     // const { handleSubmit, formState } = useForm<z.infer<typeof CheckoutFormSchema>>()
@@ -111,27 +125,78 @@ function CheckoutForm() {
     const checkoutForm = useForm<z.infer<typeof CheckoutFormSchema>>({
         resolver: zodResolver(CheckoutFormSchema),
         defaultValues: {
-            name: "",
-            phone: "",
-            email: ""
-        }
-    })
+            receiverName: "",
+            contactNumber: "",
+            description: "",
+            street: "",
+            ward: "",
+            wardCode: "61",
+            district: "",
+            districtId: 61, // giá trị mặc định
+            isDefault: true, // giá trị mặc định
+        },
+    });
 
-    function onSubmit(values: z.infer<typeof CheckoutFormSchema>) {
-        console.log(values)
+    const { user } = useUserStore();
+
+    async function onSubmit(values: z.infer<typeof CheckoutFormSchema>) {
+        console.log("Form submitted with values:", values);
+        try {
+            const response = await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/shipments/customers/${user.username}`, {
+                ...values,
+                wardCode: "61",
+                districtId: 61, // Đặt mã huyện mặc định
+                isDefault: true, // Đặt isDefault mặc định
+            });
+            createOrder()
+            console.log(response.data); // Xử lý phản hồi từ API
+        } catch (error) {
+            console.error("Error creating shipment:", error);
+        }
     }
+    const [shipMent, setShipment] = useState("")
+    async function fetchShipment() {
+        const response = await axios.get(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/shipments/customers/${user?.username}/default`)
+        console.log(response.data.data)
+        setShipment(response.data.data)
+    }
+
+    useEffect(() => { fetchShipment() }, [])
+
+    const [cartItems, setCartItems] = useState([])
+
+    async function fetchCartItems() {
+        const response = await axios.get(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/cart-items/customers/${user?.username}`)
+        console.log(response.data.items)
+        setCartItems(response.data.items)
+    }
+
+    useEffect(() => {
+        fetchCartItems()
+    }, [])
+
+    async function createOrder() {
+        const itemIds = cartItems.map(item => item.id);
+        await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/orders/${user?.username}`, {
+            "shipmentId": shipMent.id,
+            "receiverName": shipMent.receiverName,
+            "contactPhone": shipMent.contactNumber,
+            "items": [...itemIds],
+            "redirectUrl": "",
+            "paymentType": "PAYOS",
+            "shippingType": "SHIPPING"
+        })
+    }
+
 
     // console.log(checkoutForm.formState.errors)
 
     return (
         <Form {...checkoutForm}>
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                void checkoutForm.handleSubmit(onSubmit)(e)
-            }} className="space-y-6">
+            <form onSubmit={checkoutForm.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
                     control={checkoutForm.control}
-                    name="name"
+                    name="receiverName"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Họ và tên</FormLabel>
@@ -144,7 +209,7 @@ function CheckoutForm() {
                 />
                 <FormField
                     control={checkoutForm.control}
-                    name="phone"
+                    name="contactNumber"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Số điện thoại</FormLabel>
@@ -157,12 +222,51 @@ function CheckoutForm() {
                 />
                 <FormField
                     control={checkoutForm.control}
-                    name="email"
+                    name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Ghi chú</FormLabel>
                             <FormControl>
-                                <Input placeholder="Nhập email của bạn" {...field} />
+                                <Input placeholder="Nhập ghi chú" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={checkoutForm.control}
+                    name="street"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Tên đường</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Nhập tên đường của bạn" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={checkoutForm.control}
+                    name="ward"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Phường</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Nhập tên phường của bạn" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={checkoutForm.control}
+                    name="district"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Huyện</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Nhập tên huyện của bạn" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
