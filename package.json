@@ -13,7 +13,7 @@
     "engines": {
         "node": "20.x"
     },
-    "packageManager": "pnpm@9.12.3+sha256.24235772cc4ac82a62627cd47f834c72667a2ce87799a846ec4e8e555e2d4b8b",
+    "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
     "type": "module",
     "exports": {
         "./src/configs/axios": "./src/configs/axios.ts",
@@ -67,22 +67,22 @@
     "devDependencies": {
         "@eslint/compat": "^1.2.2",
         "@eslint/eslintrc": "^3.1.0",
-        "@eslint/js": "^9.13.0",
+        "@eslint/js": "^9.14.0",
         "@limegrass/eslint-plugin-import-alias": "^1.4.1",
         "@next/eslint-plugin-next": "^15.0.2",
         "@playwright/test": "^1.48.2",
-        "@stylistic/eslint-plugin": "^2.10.0",
+        "@stylistic/eslint-plugin": "^2.10.1",
         "@stylistic/stylelint-plugin": "^3.1.1",
         "@types/eslint": "^9.6.1",
-        "@types/node": "^20.17.3",
+        "@types/node": "^20.17.6",
         "@types/postcss-js": "^4.0.4",
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
-        "@typescript-eslint/eslint-plugin": "^8.12.2",
-        "@typescript-eslint/parser": "^8.12.2",
+        "@typescript-eslint/eslint-plugin": "^8.13.0",
+        "@typescript-eslint/parser": "^8.13.0",
         "autoprefixer": "^10.4.20",
         "create-ts-index": "^1.14.0",
-        "eslint": "^9.13.0",
+        "eslint": "^9.14.0",
         "eslint-config-next": "^15.0.2",
         "eslint-import-resolver-typescript": "^3.6.3",
         "eslint-plugin-import": "^2.31.0",
@@ -92,7 +92,7 @@
         "eslint-plugin-readable-tailwind": "^1.8.1",
         "eslint-plugin-simple-import-sort": "^12.1.1",
         "eslint-plugin-tailwindcss": "^3.17.5",
-        "globals": "^15.11.0",
+        "globals": "^15.12.0",
         "postcss": "^8.4.47",
         "postcss-import": "^16.1.0",
         "postcss-js": "^4.0.1",
@@ -100,10 +100,10 @@
         "postcss-replace": "^2.0.1",
         "stylelint": "^16.10.0",
         "stylelint-order": "^6.0.4",
-        "stylelint-rem-over-px": "^1.0.1",
+        "stylelint-rem-over-px": "^1.0.2",
         "tailwind-merge": "^2.5.4",
         "tailwindcss": "^3.4.14",
         "typescript": "^5.6.3",
-        "typescript-eslint": "^8.12.2"
+        "typescript-eslint": "^8.13.0"
     }
 }
