@@ -57,6 +57,8 @@ export const theme = {
         "index=3": 'index="3"',
         "index=4": 'index="4"',
         "index=5": 'index="5"',
+        "state=active": 'state="active"',
+        "state=inactive": 'state="inactive"',
         "state=open": 'state="open"',
         "state=closed": 'state="closed"',
         "align=start": 'align="start"',

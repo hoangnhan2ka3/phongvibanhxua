@@ -49,8 +49,7 @@ export default tseslint.config(
     //? Put `not supported` flat-config plugins as `recommended` here.
     //? Otherwise put them at the `//* Legacy Plugins` section below when you want to custom rules.
     ...compat.extends(
-        "plugin:import/typescript",
-        "plugin:drizzle/recommended"
+        "plugin:import/typescript"
     ),
 
     //* Global Config

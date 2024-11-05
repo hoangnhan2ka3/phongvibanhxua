@@ -8,7 +8,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
-import Footer from "@/components/layout/Footer"
 import SectionSeparator from "@/components/layout/SectionSeparator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -30,7 +29,7 @@ export default function Home() {
     return (
         <div className="relative">
             <div className={cn(
-                "w-full bg-pvbx-light px-32 py-13"
+                "w-full bg-pvbx-light px-32 py-12"
             )}>
                 <Carousel
                     opts={{
@@ -170,10 +169,10 @@ function SaleSection() {
                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                 )}>
                                     <span className="whitespace-nowrap pl-4 text-sm font-semibold text-pvbx-primary/40 line-through">
-                                        {cake.oldPrice}.000 VNĐ
+                                        {(cake.oldPrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                        {cake.salePrice}.000 VNĐ
+                                        {(cake.salePrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="secondary" type="button" className={cn(
@@ -263,7 +262,7 @@ function HighlightedSection() {
                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                             )}>
                                 <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-secondary">
-                                    {cake.price}.000 VNĐ
+                                    {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                 </span>
                             </div>
                             <Button variant="tertiary" type="button" className={cn(
@@ -309,7 +308,7 @@ function HighlightedSection() {
                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                 )}>
                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap text-1.5xl font-semibold leading-none text-pvbx-secondary">
-                                        {cake.price}.000 VNĐ
+                                        {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="tertiary" type="button" className={cn(

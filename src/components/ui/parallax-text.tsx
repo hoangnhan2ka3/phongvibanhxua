@@ -59,7 +59,7 @@ const ParallaxText = ({ className, children, baseVelocity = 100 }: ParallaxProps
     /**
      * The number of times to repeat the child text should be dynamically calculated
      * based on the size of the text and viewport. Likewise, the x motion value is
-     * currently wrapped between -20 and -45% - this 25% is derived from the fact
+     * currently wrapped between -20 and -40% - this 20% is derived from the fact
      * we have four children (100% / 4). This would also want deriving from the
      * dynamically generated number of children.
      */

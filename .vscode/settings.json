@@ -87,7 +87,9 @@
     },
     //! Spell Checker
     "cSpell.words": [
+        "appspot",
         "autoplace",
+        "autoplay",
         "autoprefixer",
         "Bitness",
         "blockless",
@@ -98,9 +100,12 @@
         "compat",
         "embla",
         "extralight",
+        "fanpage",
         "fbsbx",
+        "firebasestorage",
         "googleusercontent",
         "GTGT",
+        "hookform",
         "limegrass",
         "linebreak",
         "linebreaks",

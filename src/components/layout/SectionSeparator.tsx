@@ -9,7 +9,17 @@ export default function SectionSeparator() {
         )}>
             <style jsx>{`
                 div {
-                    background-image:  repeating-linear-gradient(45deg, rgb(var(--pvbx-primary)) 25%, transparent 25%, transparent 75%, rgb(var(--pvbx-primary)) 75%, rgb(var(--pvbx-primary))), repeating-linear-gradient(45deg, rgb(var(--pvbx-primary)) 25%, rgb(var(--pvbx-tertiary)) 25%, rgb(var(--pvbx-tertiary)) 75%, rgb(var(--pvbx-primary)) 75%, rgb(var(--pvbx-primary)));
+                    background-image: repeating-linear-gradient(
+                        45deg,
+                        rgb(var(--pvbx-primary)) 25%,
+                        transparent 25%,
+                        transparent 75%,
+                        rgb(var(--pvbx-primary)) 75%,
+                        rgb(var(--pvbx-primary))),
+                        repeating-linear-gradient(45deg, rgb(var(--pvbx-primary)) 25%,
+                        rgb(var(--pvbx-tertiary)) 25%, rgb(var(--pvbx-tertiary)) 75%,
+                        rgb(var(--pvbx-primary)) 75%, rgb(var(--pvbx-primary))
+                    )
                 }
             `}</style>
         </div>

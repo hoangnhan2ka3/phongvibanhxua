@@ -55,6 +55,11 @@ export default {
             hostname: "avatars.githubusercontent.com",
             port: "",
             pathname: "/u/**"
+        }, {
+            protocol: "https",
+            hostname: "firebasestorage.googleapis.com",
+            port: "",
+            pathname: "/v0/b/phongvibanhxua.appspot.com/**"
         }]
     },
     async headers() {
