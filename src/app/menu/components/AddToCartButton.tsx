@@ -9,7 +9,7 @@ import { type Item } from "@/types/cakes"
 import { type SetItem } from "@/types/combos"
 
 export default function AddToCartButton({ product }: { product: Item | SetItem }) {
-    const { addToCart } = useCartStore()
+    const { cart, totalItems, totalPrice, addToCart } = useCartStore()
     const { user } = useUserStore()
 
     async function createCartItems(productId: number, quantity: number) {
@@ -33,7 +33,8 @@ export default function AddToCartButton({ product }: { product: Item | SetItem }
             className={cn("grid h-[40px] flex-1 place-items-center rounded-2xl py-0")}
             onClick={() => {
                 addToCart(product)
-                createCartItems(product.id, product.quantity || 1) // Sử dụng quantity từ product hoặc mặc định là 1
+                var updateItem = cart.filter((cart) => cart.id === product.id)
+                createCartItems(product.id, updateItem[0] !== undefined ? updateItem[0].quantity + 1 : 1) // Sử dụng quantity từ product hoặc mặc định là 1
             }}
         >
             <ShoppingBasket />
