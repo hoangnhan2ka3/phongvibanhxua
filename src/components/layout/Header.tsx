@@ -51,9 +51,12 @@ export default function Header() {
         { idx: 1, href: "/", title: "Trang chủ" },
         { idx: 2, href: "/menu", title: "Menu", expandable: true },
         { idx: 3, href: "/blog", title: "Blog", expandable: true },
-        { idx: 4, href: "/about", title: "Về chúng mình" },
-        { idx: 5, href: "#footer", title: "Liên hệ" }
+        { idx: 4, href: "/about", title: "Về chúng mình" }
     ]
+
+    function scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+    }
 
     const pathname = usePathname()
     const ref = useRef<HTMLDivElement>(null)
@@ -121,6 +124,15 @@ export default function Header() {
                         </Link>
                     )
                 })}
+                <button onClick={scrollToBottom} className={cn(
+                    "flex h-inherit flex-1 items-start justify-center gap-1 px-4",
+                    {
+                        hover: "backdrop-brightness-90 duration-0",
+                        active: "backdrop-brightness-75"
+                    }
+                )}>
+                    Liên hệ
+                </button>
                 <CartButton />
             </div>
         </motion.header>

@@ -112,11 +112,15 @@ export default function SignInPage() {
                 <TabsList className="grid w-full grid-cols-2 gap-0">
                     <TabsTrigger value="Đăng nhập" className={cn(
                         "rounded-r-none bg-pvbx-primary/20 px-6 py-4 text-center",
-                        { "data-state=active": "bg-pvbx-primary" }
+                        {
+                            "data-state=active": "bg-pvbx-primary"
+                        }
                     )}>Đăng nhập</TabsTrigger>
                     <TabsTrigger value="Đăng ký" className={cn(
                         "rounded-b-none rounded-tl-none bg-pvbx-primary/20 px-6 py-4 text-center",
-                        { "data-state=active": "bg-pvbx-primary" }
+                        {
+                            "data-state=active": "bg-pvbx-primary"
+                        }
                     )}>Đăng ký</TabsTrigger>
                 </TabsList>
                 <TabsContent value="Đăng nhập">
@@ -129,7 +133,13 @@ export default function SignInPage() {
                             {signInTabFields.map((field) => (
                                 <div key={field.idx} className="space-y-1">
                                     <Label htmlFor={field.for}>{field.label}</Label>
-                                    <Input id={field.for} placeholder={field.placeholder} type={field.idx === 2 ? "password" : "text"} value={loginData[field.for as keyof typeof loginData]} onChange={handleLoginInputChange} />
+                                    <Input
+                                        id={field.for}
+                                        placeholder={field.placeholder}
+                                        type={field.idx === 2 ? "password" : "text"}
+                                        value={loginData[field.for as keyof typeof loginData]}
+                                        onChange={handleLoginInputChange}
+                                    />
                                 </div>
                             ))}
                         </CardContent>

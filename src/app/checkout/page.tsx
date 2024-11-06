@@ -1,6 +1,8 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -25,10 +27,8 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { useCartStore } from "@/hooks"
-import { cn } from "@/lib/utils"
-import axios from "axios"
 import { useUserStore } from "@/hooks/userLogin"
-import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
 
 export default function CheckoutPage() {
     const { cart, totalItems, totalPrice } = useCartStore()
@@ -93,31 +93,31 @@ export default function CheckoutPage() {
                 )}>🥲 Bạn chưa có sản phẩm nào trong giỏ hàng.</p>
             )
             }
-        </div >
+        </div>
     )
 }
 
 const CheckoutFormSchema = z.object({
     receiverName: z.string().min(2, {
-        message: "Tên người nhận không được để trống",
+        message: "Tên người nhận không được để trống"
     }),
     contactNumber: z.string().min(10, {
-        message: "Số điện thoại phải chứa ít nhất 10 ký tự",
+        message: "Số điện thoại phải chứa ít nhất 10 ký tự"
     }),
     description: z.string().optional(),
     street: z.string().min(1, {
-        message: "Tên đường không được để trống",
+        message: "Tên đường không được để trống"
     }),
     ward: z.string().min(1, {
-        message: "Phường không được để trống",
+        message: "Phường không được để trống"
     }),
     wardCode: z.string().optional(),
     district: z.string().min(1, {
-        message: "Huyện không được để trống",
+        message: "Huyện không được để trống"
     }),
     districtId: z.number().optional(),
-    isDefault: z.boolean().optional(),
-});
+    isDefault: z.boolean().optional()
+})
 
 function CheckoutForm() {
     // const { handleSubmit, formState } = useForm<z.infer<typeof CheckoutFormSchema>>()
@@ -133,27 +133,27 @@ function CheckoutForm() {
             wardCode: "61",
             district: "",
             districtId: 61, // giá trị mặc định
-            isDefault: true, // giá trị mặc định
-        },
-    });
+            isDefault: true // giá trị mặc định
+        }
+    })
 
-    const { user } = useUserStore();
+    const { user } = useUserStore()
 
     async function onSubmit(values: z.infer<typeof CheckoutFormSchema>) {
-        console.log("Form submitted with values:", values);
+        console.log("Form submitted with values:", values)
         try {
             const response = await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/shipments/customers/${user.username}`, {
                 ...values,
                 wardCode: "61",
                 districtId: 61, // Đặt mã huyện mặc định
-                isDefault: true, // Đặt isDefault mặc định
-            });
+                isDefault: true // Đặt isDefault mặc định
+            })
 
             fetchCartItems()
             fetchShipment()
 
         } catch (error) {
-            console.error("Error creating shipment:", error);
+            console.error("Error creating shipment:", error)
         }
     }
 
@@ -179,7 +179,7 @@ function CheckoutForm() {
     }, [cartItems, shipMent])
 
     async function createOrder() {
-        const itemIds = cartItems.map(item => item.id);
+        const itemIds = cartItems.map(item => item.id)
         console.log({
             shipmentId: shipMent.id,
             receiverName: shipMent.receiverName,
@@ -202,7 +202,6 @@ function CheckoutForm() {
         console.log(response.data.data)
         window.location.href = response.data.data.checkoutUrl
     }
-
 
     // console.log(checkoutForm.formState.errors)
 

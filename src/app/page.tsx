@@ -8,6 +8,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
 
+import banner_1 from "@/banner/banner_1.jpg"
+import banner_2 from "@/banner/banner_2.jpg"
+import banner_3 from "@/banner/banner_3.jpg"
 import SectionSeparator from "@/components/layout/SectionSeparator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -41,13 +44,20 @@ export default function Home() {
                     onMouseLeave={plugin.current.reset}
                 >
                     <CarouselContent className="h-full">
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        {[banner_1, banner_2, banner_3].map((banner, index) => (
                             <CarouselItem key={index}>
-                                <Card className={cn(
-                                    "bg-green-600"
-                                )}>
-                                    <CardContent className="flex aspect-banner items-center justify-center p-6">
-                                        <span className="text-4xl font-semibold">{index + 1}</span>
+                                <Card>
+                                    <CardContent className="flex aspect-banner items-center justify-center p-0">
+                                        <Image
+                                            priority
+                                            src={banner}
+                                            placeholder="blur"
+                                            quality={90}
+                                            alt={`banner_${(index + 1).toString()}`}
+                                            width={1519}
+                                            height={650}
+                                            className="h-full w-auto"
+                                        />
                                     </CardContent>
                                 </Card>
                             </CarouselItem>
