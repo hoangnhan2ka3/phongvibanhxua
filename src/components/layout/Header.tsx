@@ -218,7 +218,7 @@ function CartButton() {
                                                     </div>
                                                     <p>{cake.name}</p>
                                                 </TableCell>
-                                                <TableCell>{cake.price.toLocaleString("vi-VN")} VNĐ</TableCell>
+                                                <TableCell>{cake.discountPrice.toLocaleString("vi-VN")} VNĐ</TableCell>
                                                 <TableCell>
                                                     <div className={cn(
                                                         "flex justify-between gap-2 text-right"

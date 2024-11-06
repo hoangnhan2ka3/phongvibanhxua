@@ -142,7 +142,7 @@ export default function SingleCakesPagination() {
                                                         "flex flex-1 flex-col items-start gap-1 text-xl"
                                                     )}>
                                                         <span className="flex h-[40px] w-full items-center whitespace-nowrap pr-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                            {cake.price.toLocaleString("vi-VN")} VNĐ
+                                                            {cake.discountPrice.toLocaleString("vi-VN")} VNĐ
                                                         </span>
                                                     </div>
                                                     <DialogClose asChild>
@@ -196,7 +196,7 @@ export default function SingleCakesPagination() {
                                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                                 )}>
                                                     <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
-                                                        {cake.price.toLocaleString("vi-VN")} VNĐ
+                                                        {cake.discountPrice.toLocaleString("vi-VN")} VNĐ
                                                     </span>
                                                 </div>
                                                 <AddToCartButton product={cake} />
