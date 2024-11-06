@@ -148,20 +148,21 @@ function CheckoutForm() {
                 districtId: 61, // Đặt mã huyện mặc định
                 isDefault: true, // Đặt isDefault mặc định
             });
-            createOrder()
-            console.log(response.data); // Xử lý phản hồi từ API
+
+            fetchCartItems()
+            fetchShipment()
+
         } catch (error) {
             console.error("Error creating shipment:", error);
         }
     }
+
     const [shipMent, setShipment] = useState("")
     async function fetchShipment() {
         const response = await axios.get(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/shipments/customers/${user?.username}/default`)
         console.log(response.data.data)
         setShipment(response.data.data)
     }
-
-    useEffect(() => { fetchShipment() }, [])
 
     const [cartItems, setCartItems] = useState([])
 
@@ -172,20 +173,34 @@ function CheckoutForm() {
     }
 
     useEffect(() => {
-        fetchCartItems()
-    }, [])
+        if (cartItems !== undefined && shipMent !== undefined) {
+            createOrder()
+        }
+    }, [cartItems, shipMent])
 
     async function createOrder() {
         const itemIds = cartItems.map(item => item.id);
-        await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/orders/${user?.username}`, {
-            "shipmentId": shipMent.id,
-            "receiverName": shipMent.receiverName,
-            "contactPhone": shipMent.contactNumber,
-            "items": [...itemIds],
-            "redirectUrl": "",
-            "paymentType": "PAYOS",
-            "shippingType": "SHIPPING"
+        console.log({
+            shipmentId: shipMent.id,
+            receiverName: shipMent.receiverName,
+            contactPhone: shipMent.contactNumber,
+            items: itemIds,
+            redirectUrl: "",
+            paymentType: "PAYOS",
+            shippingType: "SHIPPING"
         })
+        const response = await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/orders/${user?.username}`, {
+            shipmentId: shipMent.id,
+            receiverName: shipMent.receiverName,
+            contactPhone: shipMent.contactNumber,
+            items: itemIds,
+            redirectUrl: "",
+            paymentType: "PAYOS",
+            shippingType: "SHIPPING"
+        })
+
+        console.log(response.data.data)
+        window.location.href = response.data.data.checkoutUrl
     }
 
 
