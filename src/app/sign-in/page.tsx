@@ -94,6 +94,8 @@ export default function SignInPage() {
                 username: "",
                 password: ""
             })
+
+            window.location.href = "https://phongvibanhxua.vercel.app/menu"
         } catch (error) {
             console.error("Error during login:", error)
             alert("Đăng nhập thất bại. Vui lòng thử lại.")
