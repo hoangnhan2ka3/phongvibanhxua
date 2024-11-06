@@ -129,7 +129,7 @@ export default function SignInPage() {
                             {signInTabFields.map((field) => (
                                 <div key={field.idx} className="space-y-1">
                                     <Label htmlFor={field.for}>{field.label}</Label>
-                                    <Input id={field.for} placeholder={field.placeholder} value={loginData[field.for as keyof typeof loginData]} onChange={handleLoginInputChange} />
+                                    <Input id={field.for} placeholder={field.placeholder} type={field.idx === 2 ? "password" : "text"} value={loginData[field.for as keyof typeof loginData]} onChange={handleLoginInputChange} />
                                 </div>
                             ))}
                         </CardContent>
@@ -150,7 +150,7 @@ export default function SignInPage() {
                             {signUpTabFields.map((field) => (
                                 <div key={field.idx} className="space-y-1">
                                     <Label htmlFor={field.for}>{field.label} <span className="text-pvbx-primary">*</span></Label>
-                                    <Input id={field.for} placeholder={field.placeholder} value={registerData[field.for as keyof typeof registerData]} onChange={handleInputChange} />
+                                    <Input id={field.for} placeholder={field.placeholder} type={field.idx === 4 || field.idx === 5 ? "password" : "text"} value={registerData[field.for as keyof typeof registerData]} onChange={handleInputChange} />
                                 </div>
                             ))}
                         </CardContent>
