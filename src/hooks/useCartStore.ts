@@ -40,7 +40,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             set((state) => ({
                 cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems + 1,
-                totalPrice: state.totalPrice + product.price
+                totalPrice: state.totalPrice + product.discountPrice
             }))
         } else {
             const updatedCart = [...cart, { ...product, quantity: 1 }]
@@ -48,7 +48,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             set((state) => ({
                 cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems + 1,
-                totalPrice: state.totalPrice + product.price
+                totalPrice: state.totalPrice + product.discountPrice
             }))
         }
     },
@@ -65,13 +65,13 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             set((state) => ({
                 cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems - 1,
-                totalPrice: state.totalPrice - product.price
+                totalPrice: state.totalPrice - product.discountPrice
             }))
         } else {
             set((state) => ({
                 cart: state.cart.filter((item) => item.id !== product.id) as Item[] | SetItem[],
                 totalItems: state.totalItems - 1,
-                totalPrice: state.totalPrice - product.price
+                totalPrice: state.totalPrice - product.discountPrice
             }))
         }
     },
@@ -79,7 +79,7 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
         set((state) => {
             const cartItem = state.cart.find((item) => item.id === product.id)
             const quantityToRemove = cartItem?.quantity ?? 0
-            const priceToRemove = cartItem ? cartItem.price * quantityToRemove : 0
+            const priceToRemove = cartItem ? cartItem.discountPrice * quantityToRemove : 0
 
             return {
                 cart: state.cart.filter((item) => item.id !== product.id) as Item[] | SetItem[],

@@ -64,7 +64,7 @@ export default function CheckoutPage() {
                                         <TableCell className="text-center">{String(index + 1).padStart(2, "0")}</TableCell>
                                         <TableCell className="font-bold">{cake.name}</TableCell>
                                         <TableCell>x{cake.quantity?.toLocaleString("vi-VN")}</TableCell>
-                                        <TableCell className="text-right">{cake.price.toLocaleString("vi-VN")} VNĐ</TableCell>
+                                        <TableCell className="text-right">{cake.discountPrice.toLocaleString("vi-VN")} VNĐ</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
