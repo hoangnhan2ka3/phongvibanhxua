@@ -256,7 +256,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
     const handleRegister = async (values: z.infer<typeof SignUpFormSchema>) => {
         setLoading(true)
         try {
-            await api.post("/store/api/v1/users/register", values)
+            const response = await api.post("/store/api/v1/users/register", values)
             alert("Đăng ký thành công!")
             afterSignUpAction?.()
         } catch (error) {
