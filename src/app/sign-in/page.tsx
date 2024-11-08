@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -27,7 +28,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import api from "@/configs/axios"
-import { useUserStore } from "@/hooks/userLogin"
+import { useFetch } from "@/hooks"
+import { useUser } from "@/hooks/useUser"
 import { cn } from "@/lib/utils"
 
 export default function SignInPage() {
@@ -107,6 +109,12 @@ const SignInFormSchema = z.object({
     )
 })
 
+interface SignInResponse {
+    data: {
+        jwtToken: string
+    }
+}
+
 function SignInForm() {
     const SignInForm = useForm<z.infer<typeof SignInFormSchema>>({
         resolver: zodResolver(SignInFormSchema),
@@ -117,22 +125,24 @@ function SignInForm() {
     })
 
     const [loading, setLoading] = useState(false)
-    const { setUser } = useUserStore()
+    const { setUser } = useUser()
     const router = useRouter()
 
     const handleLogin = async (values: z.infer<typeof SignInFormSchema>) => {
         setLoading(true)
         try {
-            const response = await api.post("/store/api/v1/auth/sign-in", values)
+            const response = await api.post<SignInResponse>("/store/api/v1/auth/sign-in", values)
             const { jwtToken } = response.data.data
-            localStorage.setItem("jwtToken", jwtToken)
-            setUser(response.data.data)
+            setUser({
+                username: values.username,
+                jwtToken: jwtToken
+            })
             alert("Đăng nhập thành công!")
 
             router.push("/menu")
         } catch (error) {
             console.error("Error during login:", error)
-            alert("Đăng nhập thất bại. Vui lòng thử lại.")
+            alert("Đăng nhập thất bại. Tên đăng nhập không tồn tại hoặc sai mật khẩu. Vui lòng thử lại.")
         } finally {
             setLoading(false)
         }

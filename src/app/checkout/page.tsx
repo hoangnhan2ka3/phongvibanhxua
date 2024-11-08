@@ -27,7 +27,7 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { useCartStore } from "@/hooks"
-import { useUserStore } from "@/hooks/userLogin"
+import { useUser } from "@/hooks/useUser"
 import { cn } from "@/lib/utils"
 
 export default function CheckoutPage() {
@@ -137,7 +137,7 @@ function CheckoutForm() {
         }
     })
 
-    const { user } = useUserStore()
+    const { user } = useUser()
 
     async function onSubmit(values: z.infer<typeof CheckoutFormSchema>) {
         console.log("Form submitted with values:", values)

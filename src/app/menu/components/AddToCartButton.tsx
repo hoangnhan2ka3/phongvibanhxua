@@ -3,14 +3,14 @@ import { ShoppingBasket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import api from "@/configs/axios"
 import { useCartStore } from "@/hooks"
-import { useUserStore } from "@/hooks/userLogin"
+import { useUser } from "@/hooks/useUser"
 import { cn } from "@/lib/utils"
 import { type Item } from "@/types/cakes"
 import { type SetItem } from "@/types/combos"
 
 export default function AddToCartButton({ product }: { product: Item | SetItem }) {
     const { cart, totalItems, totalPrice, addToCart } = useCartStore()
-    const { user } = useUserStore()
+    const { user } = useUser()
 
     async function createCartItems(productId: number, quantity: number) {
         try {

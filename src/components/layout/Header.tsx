@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion"
 import { ChevronDown, CircleUserRound, Minus, Plus, ShoppingBasket, Trash } from "lucide-react"
+import { type Url } from "next/dist/shared/lib/router/router"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 import {
     AlertDialog,
@@ -29,6 +30,7 @@ import {
     DrawerTitle,
     DrawerTrigger
 } from "@/components/ui/drawer"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import {
     Table,
     TableBody,
@@ -43,7 +45,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
-import { useCartStore, useShrinkOnScroll } from "@/hooks"
+import { useCartStore, useShrinkOnScroll, useUser } from "@/hooks"
 import { cn } from "@/lib/utils"
 
 export default function Header() {
@@ -331,9 +333,7 @@ function CartButton() {
                 </Drawer>
                 <Tooltip>
                     <SignInButton />
-                    <TooltipContent side="bottom">
-                        <p>Đăng nhập</p>
-                    </TooltipContent>
+
                 </Tooltip>
             </TooltipProvider>
         </div>
@@ -342,19 +342,58 @@ function CartButton() {
 
 function SignInButton() {
     const pathname = usePathname()
-    const isInSignInPage = pathname === "/sign-in"
+    const isActiveLink = pathname === "/sign-in" || pathname === "/account"
+
+    const { user, isAuth, clearUser } = useUser()
+
+    const Comp = isAuth ? PopoverTrigger : Link
+
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
     return (
-        <TooltipTrigger asChild>
-            <Link href="/sign-in" className={cn(
-                "grid aspect-1 h-full w-auto place-items-center text-pvbx-dark",
-                isInSignInPage ? "bg-pvbx-primary/15" : {
-                    hover: "bg-pvbx-primary/10 duration-0",
-                    active: "bg-pvbx-primary/15"
-                }
-            )}>
-                <CircleUserRound size={24} />
-            </Link>
-        </TooltipTrigger>
+        <>
+            <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+                <TooltipTrigger asChild>
+                    <Comp href={isAuth ? null as unknown as Url : "/sign-in"} className={cn(
+                        "grid aspect-1 h-full w-auto place-items-center text-pvbx-dark",
+                        isActiveLink ? "bg-pvbx-primary/15" : {
+                            hover: "bg-pvbx-primary/10 duration-0",
+                            active: "bg-pvbx-primary/15"
+                        }
+                    )}>
+                        {user && isAuth ? (
+                            <span className={cn(
+                                "grid size-6 place-items-center rounded-full border-2 border-pvbx-dark font-sans text-xs font-semibold leading-none text-pvbx-dark"
+                            )}>
+                                {user.username.charAt(0).toUpperCase()}
+                            </span>
+                        ) : (
+                            <CircleUserRound size={24} />
+                        )}
+                    </Comp>
+                </TooltipTrigger>
+                <PopoverContent className={cn(
+                    "flex flex-col gap-2"
+                )}>
+                    <div className="w-full px-2 py-1">
+                        <p className="text-sm font-semibold opacity-80">Username:</p>
+                        <span>{user?.username}</span>
+                    </div>
+                    <Button variant="outline" className={cn(
+                        "grid size-full place-items-center font-semibold text-pvbx-primary"
+                    )} onClick={() => {
+                        setIsPopoverOpen(false)
+                        clearUser()
+                    }}>
+                        Đăng xuất
+                    </Button>
+                </PopoverContent>
+            </Popover>
+            <TooltipContent side="bottom">
+                <p>
+                    {isAuth ? "Tài khoản" : "Đăng nhập"}
+                </p>
+            </TooltipContent>
+        </>
     )
 }
