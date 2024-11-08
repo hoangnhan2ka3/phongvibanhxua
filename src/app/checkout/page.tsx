@@ -70,7 +70,7 @@ export default function CheckoutPage() {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={2} className="text-xl font-bold text-pvbx-primary"></TableCell>
+                                    <TableCell colSpan={2} className="text-xl font-bold text-pvbx-primary">Tổng cộng</TableCell>
                                     <TableCell className="text-xl font-bold">x{totalItems}</TableCell>
                                     <TableCell className="text-right text-xl font-bold">{totalPrice.toLocaleString("vi-VN")} VNĐ</TableCell>
                                 </TableRow>
@@ -113,7 +113,7 @@ const CheckoutFormSchema = z.object({
     }),
     wardCode: z.string().optional(),
     district: z.string().min(1, {
-        message: "Huyện không được để trống"
+        message: "Quận không được để trống"
     }),
     districtId: z.number().optional(),
     isDefault: z.boolean().optional()
@@ -145,7 +145,7 @@ function CheckoutForm() {
             const response = await axios.post(`https://phongvibanhxua-be-apis.onrender.com/store/api/v1/shipments/customers/${user.username}`, {
                 ...values,
                 wardCode: "61",
-                districtId: 61, // Đặt mã huyện mặc định
+                districtId: 61, // Đặt mã quận mặc định
                 isDefault: true // Đặt isDefault mặc định
             })
 
@@ -207,7 +207,7 @@ function CheckoutForm() {
 
     return (
         <Form {...checkoutForm}>
-            <form onSubmit={checkoutForm.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={checkoutForm.handleSubmit(onSubmit)} className="space-y-2">
                 <FormField
                     control={checkoutForm.control}
                     name="receiverName"
@@ -278,9 +278,9 @@ function CheckoutForm() {
                     name="district"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Huyện</FormLabel>
+                            <FormLabel>Quận</FormLabel>
                             <FormControl>
-                                <Input placeholder="Nhập tên huyện của bạn" {...field} />
+                                <Input placeholder="Nhập tên quận của bạn" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

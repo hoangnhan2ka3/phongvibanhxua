@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 export default function Footer() {
     const detailInfos = [
         { idx: 1, title: "Người đại diện", content: "(Ông.) Đinh Minh Huân." },
-        { idx: 2, title: "Số điện thoại", content: "0373 574 298." }
+        { idx: 2, title: "Số điện thoại", content: "0357 064 765." }
     ]
     const infoLinks = [
         { idx: 1, href: "/", title: "Trang chủ" },
@@ -23,8 +23,8 @@ export default function Footer() {
         { idx: 3, href: "/", title: "Xuất hóa đơn GTGT" }
     ]
     const hotlineLinks = [
-        { idx: 1, title: "Đặt hàng", content: "0373574298", supportTime: "07:00 - 22:30" },
-        { idx: 2, title: "Hỗ trợ", content: "0373574298", supportTime: "07:00 - 22:30" }
+        { idx: 1, title: "Đặt hàng", content: "0357064765", supportTime: "07:00 - 22:30" },
+        { idx: 2, title: "Hỗ trợ", content: "0357064765", supportTime: "07:00 - 22:30" }
     ]
     const contactInfos = [
         { idx: 1, href: "https://www.facebook.com/phongvi.banhxua", title: "Fanpage", content: "Phong Vị Bánh Xưa" },
@@ -40,7 +40,7 @@ export default function Footer() {
             title: "Địa chỉ 2",
             content: "Lô E2a-7, Đường D1, Phường Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh"
         },
-        { idx: 4, href: "tel:0373574298", title: "Số điện thoại", content: "0373 574 298" },
+        { idx: 4, href: "tel:0357064765", title: "Số điện thoại", content: "0357 064 765" },
         { idx: 5, href: "mailto:phongvibanhxua@gmail.com", title: "Email", content: "phongvibanhxua@gmail.com" }
     ]
 

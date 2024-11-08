@@ -44,7 +44,6 @@ export const useCartStore = create(persist<State & Actions>((set, get) => ({
             }))
         } else {
             const updatedCart = [...cart, { ...product, quantity: 1 }]
-
             set((state) => ({
                 cart: updatedCart as Item[] | SetItem[],
                 totalItems: state.totalItems + 1,

@@ -34,8 +34,6 @@ export default function NewCakes() {
         .filter((cake) => newCakeIds.includes(cake.id))
         .sort((a, b) => newCakeIds.indexOf(a.id) - newCakeIds.indexOf(b.id))
 
-    const router = useRouter()
-
     return (
         <div className={cn(
             "flex flex-col gap-6 px-32"
