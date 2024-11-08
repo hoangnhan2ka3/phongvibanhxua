@@ -240,7 +240,7 @@ const SignUpFormSchema = z.object({
 })
 
 function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
-    const SignUpForm = useForm<z.infer<typeof SignUpFormSchema>>({
+    const RegisterForm = useForm<z.infer<typeof SignUpFormSchema>>({
         resolver: zodResolver(SignUpFormSchema),
         defaultValues: {
             username: "",
@@ -255,8 +255,11 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
 
     const handleRegister = async (values: z.infer<typeof SignUpFormSchema>) => {
         setLoading(true)
+        const responseZ = await api.post("/store/api/v1/users/register", values)
+        console.log("RESPONSEz:", responseZ, responseZ.data)
         try {
             const response = await api.post("/store/api/v1/users/register", values)
+            console.log("RESPONSE:", response, response.data)
             alert("Đăng ký thành công!")
             afterSignUpAction?.()
         } catch (error) {
@@ -270,10 +273,10 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     return (
-        <Form {...SignUpForm}>
-            <form onSubmit={SignUpForm.handleSubmit(handleRegister)} className="space-y-6">
+        <Form {...RegisterForm}>
+            <form onSubmit={RegisterForm.handleSubmit(handleRegister)} className="space-y-6">
                 <FormField
-                    control={SignUpForm.control}
+                    control={RegisterForm.control}
                     name="username"
                     render={({ field }) => (
                         <FormItem>
@@ -290,7 +293,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={SignUpForm.control}
+                    control={RegisterForm.control}
                     name="name"
                     render={({ field }) => (
                         <FormItem>
@@ -307,7 +310,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={SignUpForm.control}
+                    control={RegisterForm.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
@@ -324,7 +327,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={SignUpForm.control}
+                    control={RegisterForm.control}
                     name="password"
                     render={({ field }) => (
                         <FormItem>
@@ -347,7 +350,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={SignUpForm.control}
+                    control={RegisterForm.control}
                     name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>

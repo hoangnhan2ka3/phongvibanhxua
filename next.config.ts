@@ -13,9 +13,6 @@ export default {
     devIndicators: {
         buildActivityPosition: "bottom-right"
     },
-    compiler: {
-        removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["warn", "error"] } : false
-    },
     typescript: {
         ignoreBuildErrors: true
     },
