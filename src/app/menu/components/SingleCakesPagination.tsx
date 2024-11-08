@@ -165,13 +165,13 @@ export default function SingleCakesPagination() {
                                     <CardHeader className={cn(
                                         "p-2",
                                         {
-                                            "group-first": "gap-4 pt-4"
+                                            "group-first": currentPage === 1 && "gap-4 pt-4"
                                         }
                                     )}>
                                         <CardTitle className={cn(
                                             "line-clamp-1 text-center text-base",
                                             {
-                                                "group-first": "text-start text-xl"
+                                                "group-first": currentPage === 1 && "text-start text-xl"
                                             }
                                         )}>
                                             {cake.name}
@@ -179,7 +179,7 @@ export default function SingleCakesPagination() {
                                         <CardDescription className={cn(
                                             "line-clamp-2 text-center text-xs",
                                             {
-                                                "group-first": "line-clamp-none text-start text-sm"
+                                                "group-first": currentPage === 1 && "line-clamp-none text-start text-sm"
                                             }
                                         )}>
                                             {cake.description}

@@ -3,8 +3,6 @@ import { persist } from "zustand/middleware"
 
 import { type Item } from "@/types/cakes"
 import { type SetItem } from "@/types/combos"
-import api from "@/configs/axios"
-import { useUserStore } from "./userLogin"
 
 interface State {
     cart: Item[] | SetItem[],
@@ -23,24 +21,6 @@ const INITIAL_STATE: State = {
     cart: [],
     totalItems: 0,
     totalPrice: 0
-}
-
-async function createCartItems(productId: number, quantity: number) {
-    const { user } = useUserStore()
-    console.log(quantity)
-    try {
-        if (user !== null) {
-            const response = await api.post(`/store/api/v1/cart-items/customers/${user.username}`, {
-                "productId": productId,
-                "comboId": 0,
-                "type": "PRODUCT",
-                "quantity": quantity
-            })
-            console.log(response.data)
-        } else window.location.href = "https://phongvibanhxua.vercel.app/sign-in"
-    } catch (error) {
-        console.error("Error creating cart items:", error)
-    }
 }
 
 export const useCartStore = create(persist<State & Actions>((set, get) => ({
