@@ -207,7 +207,7 @@ const SignUpFormSchema = z.object({
             u => !u.includes(" "), "Username không thể chứa khoảng trắng."
         )
     ),
-    name: (
+    fullname: (
         z.string().min(1, {
             message: "Họ và tên không được để trống."
         }).trim()
@@ -240,11 +240,11 @@ const SignUpFormSchema = z.object({
 })
 
 function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
-    const RegisterForm = useForm<z.infer<typeof SignUpFormSchema>>({
+    const SignUpForm = useForm<z.infer<typeof SignUpFormSchema>>({
         resolver: zodResolver(SignUpFormSchema),
         defaultValues: {
             username: "",
-            name: "",
+            fullname: "",
             email: "",
             password: "",
             confirmPassword: ""
@@ -254,12 +254,8 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
     const [loading, setLoading] = useState(false)
 
     const handleRegister = async (values: z.infer<typeof SignUpFormSchema>) => {
-        setLoading(true)
-        const responseZ = await api.post("/store/api/v1/users/register", values)
-        console.log("RESPONSEz:", responseZ, responseZ.data)
         try {
-            const response = await api.post("/store/api/v1/users/register", values)
-            console.log("RESPONSE:", response, response.data)
+            await api.post("/store/api/v1/users/register", values)
             alert("Đăng ký thành công!")
             afterSignUpAction?.()
         } catch (error) {
@@ -273,10 +269,10 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     return (
-        <Form {...RegisterForm}>
-            <form onSubmit={RegisterForm.handleSubmit(handleRegister)} className="space-y-6">
+        <Form {...SignUpForm}>
+            <form onSubmit={SignUpForm.handleSubmit(handleRegister)} className="space-y-6">
                 <FormField
-                    control={RegisterForm.control}
+                    control={SignUpForm.control}
                     name="username"
                     render={({ field }) => (
                         <FormItem>
@@ -293,8 +289,8 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={RegisterForm.control}
-                    name="name"
+                    control={SignUpForm.control}
+                    name="fullname"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel htmlFor="name" required>Họ và tên</FormLabel>
@@ -310,7 +306,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={RegisterForm.control}
+                    control={SignUpForm.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
@@ -327,7 +323,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={RegisterForm.control}
+                    control={SignUpForm.control}
                     name="password"
                     render={({ field }) => (
                         <FormItem>
@@ -350,7 +346,7 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
                     )}
                 />
                 <FormField
-                    control={RegisterForm.control}
+                    control={SignUpForm.control}
                     name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
