@@ -256,12 +256,12 @@ function SignUpForm({ afterSignUpAction }: { afterSignUpAction?: () => void }) {
     const handleRegister = async (values: z.infer<typeof SignUpFormSchema>) => {
         setLoading(true)
         try {
-            // const response = await api.post("/store/api/v1/users/register", values)
+            await api.post("/store/api/v1/users/register", values)
             alert("Đăng ký thành công!")
             afterSignUpAction?.()
         } catch (error) {
             console.error("Error during registration:", error)
-            alert("Đăng ký thất bại. Vui lòng thử lại.")
+            alert("Đăng ký thất bại. Trùng tên đăng nhập hoặc email. Vui lòng thử lại.")
         } finally {
             setLoading(false)
         }
