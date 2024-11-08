@@ -1,4 +1,8 @@
-import axios, { type AxiosError, type AxiosRequestConfig } from "axios"
+import axios, {
+    type AxiosError,
+    type AxiosRequestConfig,
+    type InternalAxiosRequestConfig
+} from "axios"
 
 const baseUrl = "https://phongvibanhxua-be-apis.onrender.com"
 
@@ -9,9 +13,9 @@ const config: AxiosRequestConfig = {
 
 const api = axios.create(config)
 
-const handleBefore = (config: AxiosRequestConfig): AxiosRequestConfig => {
+const handleBefore = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     const token = localStorage.getItem("token")?.replaceAll('"', "")
-    if (config.headers) {
+    if (token) {
         config.headers.Authorization = `Bearer ${token}`
         config.headers["ngrok-skip-browser-warning"] = "true"
     }

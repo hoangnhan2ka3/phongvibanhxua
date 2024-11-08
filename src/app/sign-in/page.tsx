@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter } from "next/navigation"
-import api from "phongvibanhxua/src/configs/axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -27,6 +26,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import api from "@/configs/axios"
 import { useUserStore } from "@/hooks/userLogin"
 import { cn } from "@/lib/utils"
 
