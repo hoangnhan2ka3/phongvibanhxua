@@ -145,7 +145,7 @@ function CartButton() {
     const router = useRouter()
 
     const { cart, totalItems, totalPrice, addToCart, removeFromCart, removeProductFromCart, emptyCart } = useCartStore()
-
+    const { user } = useUser()
     return (
         <div className={cn(
             "absolute right-0 flex h-full w-32 bg-pvbx-light"
@@ -243,7 +243,9 @@ function CartButton() {
                                                             <Button variant="outline" disabled={cake.quantity! < 2} type="button" className={cn(
                                                                 "grid w-fit place-items-center justify-self-end rounded-full p-2"
                                                             )} onClick={() => {
-                                                                removeFromCart(cake)
+                                                                console.log("removingggg")
+                                                                console.log(user)
+                                                                removeFromCart(cake, user)
                                                             }}>
                                                                 <Minus size={14} color="rgb(var(--pvbx-primary))" />
                                                             </Button>
@@ -251,7 +253,9 @@ function CartButton() {
                                                             <Button variant="outline" disabled={cake.quantity! > 98} type="button" className={cn(
                                                                 "grid w-fit place-items-center justify-self-end rounded-full p-2"
                                                             )} onClick={() => {
-                                                                addToCart(cake)
+                                                                console.log("addinggg")
+                                                                console.log(user)
+                                                                addToCart(cake, user)
                                                             }}>
                                                                 <Plus size={14} color="rgb(var(--pvbx-primary))" />
                                                             </Button>
