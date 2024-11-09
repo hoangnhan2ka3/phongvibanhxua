@@ -20,7 +20,7 @@ export default function AddToCartButton({ product }: { product: Item | SetItem }
                 "type": "PRODUCT",
                 "quantity": quantity
             })
-            console.log(response.data)
+            // console.log(response.data)
         } catch (error) {
             console.error("Error creating cart items:", error)
         }
@@ -30,10 +30,10 @@ export default function AddToCartButton({ product }: { product: Item | SetItem }
         <Button
             variant="secondary"
             type="button"
-            className={cn("grid h-[40px] flex-1 place-items-center rounded-2xl py-0")}
+            className={cn("grid h-10 flex-1 place-items-center rounded-2xl py-0")}
             onClick={() => {
                 addToCart(product)
-                var updateItem = cart.filter((cart) => cart.id === product.id)
+                const updateItem = cart.filter((cart) => cart.id === product.id)
                 createCartItems(product.id, updateItem[0] !== undefined ? updateItem[0].quantity + 1 : 1) // Sử dụng quantity từ product hoặc mặc định là 1
             }}
         >

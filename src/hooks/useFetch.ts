@@ -39,7 +39,7 @@ export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseF
             .catch((err: Error) => {
                 setLoading(false)
 
-                if (err.name !== "AbortError" && err) {
+                if (err && err.name !== "AbortError") {
                     console.error("Error fetching data:", err)
                     setError(err)
                 }

@@ -181,18 +181,18 @@ function SaleSection() {
                                     <span className="whitespace-nowrap pl-4 text-sm font-semibold text-pvbx-primary/40 line-through">
                                         {(cake.oldPrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
-                                    <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
+                                    <span className="flex h-10 w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-primary">
                                         {(cake.salePrice * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="secondary" type="button" className={cn(
-                                    "grid h-[40px] flex-1 place-items-center rounded-full py-0"
+                                    "grid h-10 flex-1 place-items-center rounded-full py-0"
                                 )}>
                                     <ShoppingBasket />
                                 </Button>
                             </div>
                             <Button type="button" className={cn(
-                                "grid h-[40px] w-full place-items-center rounded-2xl py-0"
+                                "grid h-10 w-full place-items-center rounded-2xl py-0"
                             )}>
                                 Đặt ngay
                             </Button>
@@ -271,18 +271,18 @@ function HighlightedSection() {
                             <div className={cn(
                                 "flex flex-1 flex-col items-start gap-1 text-xl"
                             )}>
-                                <span className="flex h-[40px] w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-secondary">
+                                <span className="flex h-10 w-full items-center whitespace-nowrap px-4 text-1.5xl font-semibold leading-none text-pvbx-secondary">
                                     {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                 </span>
                             </div>
                             <Button variant="tertiary" type="button" className={cn(
-                                "grid h-[40px] flex-1 place-items-center rounded-full py-0"
+                                "grid h-10 flex-1 place-items-center rounded-full py-0"
                             )}>
                                 <ShoppingBasket />
                             </Button>
                         </div>
                         <Button variant="secondary" type="button" className={cn(
-                            "grid h-[40px] w-full place-items-center rounded-2xl py-0"
+                            "grid h-10 w-full place-items-center rounded-2xl py-0"
                         )}>
                             Đặt ngay
                         </Button>
@@ -317,18 +317,18 @@ function HighlightedSection() {
                                 <div className={cn(
                                     "flex flex-1 flex-col items-start gap-1 text-xl"
                                 )}>
-                                    <span className="flex h-[40px] w-full items-center whitespace-nowrap text-1.5xl font-semibold leading-none text-pvbx-secondary">
+                                    <span className="flex h-10 w-full items-center whitespace-nowrap text-1.5xl font-semibold leading-none text-pvbx-secondary">
                                         {(cake.price * 1000).toLocaleString("vi-VN")} VNĐ
                                     </span>
                                 </div>
                                 <Button variant="tertiary" type="button" className={cn(
-                                    "grid h-[40px] flex-1 place-items-center rounded-full py-0"
+                                    "grid h-10 flex-1 place-items-center rounded-full py-0"
                                 )}>
                                     <ShoppingBasket />
                                 </Button>
                             </div>
                             <Button variant="secondary" type="button" className={cn(
-                                "grid h-[40px] w-full place-items-center rounded-2xl py-0"
+                                "grid h-10 w-full place-items-center rounded-2xl py-0"
                             )}>
                                 Đặt ngay
                             </Button>

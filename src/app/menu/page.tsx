@@ -18,7 +18,7 @@ export default function MenuPage() {
 
     return (
         <div className={cn(
-            "flex flex-col gap-12 bg-pvbx-light py-12"
+            "flex min-h-[calc(100dvh-12rem-90px)] flex-col gap-12 bg-pvbx-light py-12"
         )}>
             <NewCakes />
             <SectionSeparator />
@@ -53,7 +53,7 @@ export default function MenuPage() {
                     </AccordionItem>
                 </Accordion>
                 <TabsContent value="all">
-                    Show all categories here.
+                    <SingleCakesPagination />
                 </TabsContent>
                 <TabsContent value="cake" className={cn(
                     "w-full"

@@ -18,7 +18,7 @@ export default function OrderNowButton({ product }: { product: Item | SetItem })
             addToCart(product)
             router.push("/checkout")
         }} className={cn(
-            "grid h-[40px] w-full place-items-center rounded-2xl py-0"
+            "grid h-10 w-full place-items-center rounded-2xl py-0"
         )}>
             Đặt ngay
         </Button>

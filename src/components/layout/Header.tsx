@@ -257,7 +257,7 @@ function CartButton() {
                                                             </Button>
                                                         </div>
                                                         <Button variant="outline" type="button" className={cn(
-                                                            "flex h-[40px] w-fit items-center justify-center gap-2 justify-self-end rounded-full py-0 font-semibold text-pvbx-primary"
+                                                            "flex h-10 w-fit items-center justify-center gap-2 justify-self-end rounded-full py-0 font-semibold text-pvbx-primary"
                                                         )} onClick={() => {
                                                             removeProductFromCart(cake)
                                                         }}>
@@ -342,13 +342,10 @@ function CartButton() {
 
 function SignInButton() {
     const pathname = usePathname()
-    const isActiveLink = pathname === "/sign-in" || pathname === "/account"
-
     const { user, isAuth, clearUser } = useUser()
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
     const Comp = isAuth ? PopoverTrigger : Link
-
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
 
     return (
         <>
@@ -356,7 +353,7 @@ function SignInButton() {
                 <TooltipTrigger asChild>
                     <Comp href={isAuth ? null as unknown as Url : "/sign-in"} className={cn(
                         "grid aspect-1 h-full w-auto place-items-center text-pvbx-dark",
-                        isActiveLink ? "bg-pvbx-primary/15" : {
+                        pathname === "/sign-in" ? "bg-pvbx-primary/15" : {
                             hover: "bg-pvbx-primary/10 duration-0",
                             active: "bg-pvbx-primary/15"
                         }
@@ -376,7 +373,7 @@ function SignInButton() {
                     "flex flex-col gap-2"
                 )}>
                     <div className="w-full px-2 py-1">
-                        <p className="text-sm font-semibold opacity-80">Username:</p>
+                        <p className="text-xs font-semibold opacity-60">Tên đăng nhập:</p>
                         <span>{user?.username}</span>
                     </div>
                     <Button variant="outline" className={cn(

@@ -43,9 +43,10 @@ export default function RootLayout({
             className={cn(
                 fonts.Nunito.variable,
                 fonts.Lost_Type.variable,
-                "bg-pvbx-background font-medium text-pvbx-dark",
+                "bg-pvbx-background text-[0.9373dvw] font-medium text-pvbx-dark",
                 {
-                    selection: "bg-red-500 text-white text-shadow-none"
+                    selection: "bg-red-500 text-white text-shadow-none",
+                    "2xl": "text-base"
                 }
             )}
         >

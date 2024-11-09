@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -213,7 +214,7 @@ function CheckoutForm() {
                     name="receiverName"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Họ và tên</FormLabel>
+                            <FormLabel required>Họ và tên</FormLabel>
                             <FormControl>
                                 <Input placeholder="Nhập đầy đủ họ và tên của bạn" {...field} />
                             </FormControl>
@@ -226,7 +227,7 @@ function CheckoutForm() {
                     name="contactNumber"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Số điện thoại</FormLabel>
+                            <FormLabel required>Số điện thoại</FormLabel>
                             <FormControl>
                                 <Input placeholder="Nhập số điện thoại của bạn" {...field} />
                             </FormControl>
@@ -252,7 +253,7 @@ function CheckoutForm() {
                     name="street"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Tên đường</FormLabel>
+                            <FormLabel required>Tên đường</FormLabel>
                             <FormControl>
                                 <Input placeholder="Nhập tên đường của bạn" {...field} />
                             </FormControl>
@@ -265,7 +266,7 @@ function CheckoutForm() {
                     name="ward"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Phường</FormLabel>
+                            <FormLabel required>Phường</FormLabel>
                             <FormControl>
                                 <Input placeholder="Nhập tên phường của bạn" {...field} />
                             </FormControl>
@@ -278,7 +279,7 @@ function CheckoutForm() {
                     name="district"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Quận</FormLabel>
+                            <FormLabel required>Quận</FormLabel>
                             <FormControl>
                                 <Input placeholder="Nhập tên quận của bạn" {...field} />
                             </FormControl>
