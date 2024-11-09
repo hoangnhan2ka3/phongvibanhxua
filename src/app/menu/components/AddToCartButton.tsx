@@ -36,9 +36,13 @@ export default function AddToCartButton({ product }: { product: Item | SetItem }
             type="button"
             className={cn("grid h-10 flex-1 place-items-center rounded-2xl py-0")}
             onClick={() => {
-                !isAuth ? router.push("/sign-in") : addToCart(product)
-                const updateItem = cart.filter((cart) => cart.id === product.id)
-                createCartItems(product.id, updateItem[0] !== undefined ? updateItem[0].quantity + 1 : 1) // Sử dụng quantity từ product hoặc mặc định là 1
+                if (!isAuth) {
+                    router.push("/sign-in")
+                } else {
+                    addToCart(product)
+                    const updateItem = cart.filter((cart) => cart.id === product.id)
+                    createCartItems(product.id, updateItem[0] !== undefined ? updateItem[0].quantity + 1 : 1) // Sử dụng quantity từ product hoặc mặc định là 1
+                }
             }}
         >
             <ShoppingBasket />

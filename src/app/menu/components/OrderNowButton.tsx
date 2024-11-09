@@ -16,8 +16,12 @@ export default function OrderNowButton({ product }: { product: Item | SetItem })
 
     return (
         <Button type="button" onClick={() => {
-            !isAuth ? router.push("/sign-in") : addToCart(product)
-            router.push("/checkout")
+            if (!isAuth) {
+                router.push("/sign-in")
+            } else {
+                addToCart(product)
+                router.push("/checkout")
+            }
         }} className={cn(
             "grid h-10 w-full place-items-center rounded-2xl py-0"
         )}>
